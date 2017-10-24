@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row my-3">
+    <div class="col-12">
+      <button class="btn btn-success" (click)="onNewPerson()">Add Person</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <ul class="list-group">
+        <app-user-list-item
+          *ngFor="let appUser of appUsers; let i = index"
+          [appUser]="appUser"
+          [index]="i">
+        </app-user-list-item>
+      </ul>
+    </div>
+  </div>
+</div>

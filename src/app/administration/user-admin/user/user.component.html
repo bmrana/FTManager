@@ -1,0 +1,44 @@
+<!-- <div *ngIf="[currentUser]; else userForm">
+  <p class="lead">No User is Selected...</p>
+</div>
+<ng-template #userForm> -->
+<div class="container">
+  <div class="row my-3">
+    <div class="col-12">
+      <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label 
+              for="userSelector"
+              class="col-form-lable">Select User to Add</label>
+              <select 
+                formControlName="selectedUser" 
+                id="userSelector" 
+                #userSelector 
+                class="form-control">
+                <option *ngFor="let user of domainUsers" [ngValue]="user">
+                  {{user.DisplayName}} ({{user.EmployeeID}})
+                </option>
+              </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="personForm.value.selectedUser">
+    <div class="col-12">
+      <div class="card">
+        <h4 class="card-header">{{personForm.value.selectedUser.DisplayName}}</h4>
+        <div class="card-body">
+          <h5 class="card-text text-muted">{{personForm.value.selectedUser.Description}}</h5>
+          <h6 class="card-text text-muted">Email: {{personForm.value.selectedUser.EmailAddress}}</h6>
+          <h6 class="card-text text-muted"> EID: {{personForm.value.selectedUser.EmployeeID}}</h6>
+          <hr>
+          <button class="btn btn-success card-link" (click)="onSubmit()">Add</button>
+          <button class="btn btn-secondary card-link">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
