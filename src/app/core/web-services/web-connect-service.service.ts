@@ -98,17 +98,40 @@ export class WebConnectServiceService {
       );
     }
 
+    insertFinalized(formData: FormData) {
+      return this.http.post(this.serviceURL + 'DOR/lookupService.svc/insertDOR', formData, {headers: this.headers})
+      .map(
+        (currentDOR: number) => {
+          this.dorFormService.updateDorNumber(currentDOR);
+          return currentDOR;
+        }
+      );
+    }
+
     getDashboardDORs(user: AppUser) {
       let dashParameters = new HttpParams();
       dashParameters = dashParameters.append('EmployeeID', user.EmployeeID);
       dashParameters = dashParameters.append('RoleID', user.RoleID.toString());
-
       return this.http.get<DashboardDOR[]>(this.serviceURL + 'DOR/lookupService.svc/getDashboardDORs',
         {params: dashParameters})
         .map(
           (dors: DashboardDOR[]) => {
             this.dashboardService.setDashboardDORs(dors);
             return dors;
+          }
+        );
+    }
+
+    getDOR(dorID: string) {
+      let dorParams = new HttpParams();
+      dorParams = dorParams.append('dorID', dorID);
+
+      return this.http.get<any[]>(this.serviceURL + 'DOR/lookupService.svc/getDOR',
+        {params: dorParams})
+        .map(
+          (dor: any[]) => {
+            this.dorFormService.setDOR(dor);
+            return dor;
           }
         );
     }

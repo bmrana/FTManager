@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit } from '@angular/core';
 import { WebConnectServiceService } from '../../../core/web-services/web-connect-service.service';
 import { DorFormDataService } from '../data/dor-form-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-status',
@@ -19,7 +20,7 @@ export class FormStatusComponent implements OnInit {
   currentFto: string;
   currentShiftDate: string;
 
-  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService) { }
+  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService, private router: Router) { }
   
     ngOnInit() {
       this.dorNumberSubscription = this.dorData.currentDORNumber
@@ -46,10 +47,20 @@ export class FormStatusComponent implements OnInit {
           }
         );
     }
-  
+
     onSubmit() {
-      this.http.insertDOR(this.dorData.formData);
+      this.http.insertDOR(this.dorData.getDorData());
     }
-  
+
+    onFinalize() {
+      if (this.dorData.setFinalized()) {
+        this.http.insertFinalized(this.dorData.getDorData())
+          .subscribe(
+            d => {
+              this.router.navigate(['/dashboard']);
+            }
+          );
+      }
+    }
 
 }

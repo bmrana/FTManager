@@ -1,3 +1,4 @@
+import { CannedComment } from './cannedComment.model';
 import { CategoryRating } from './categoryRating.model';
 import { UsersService } from './../../../core/services/users.service';
 import { Subject } from 'rxjs/Subject';
@@ -7,14 +8,15 @@ import { DorComponent } from './../dor.component';
 import { DORComment } from './../../../core/data-models/dor-comment.model';
 import { FormData } from './dor-form-data.model';
 import { Injectable } from '@angular/core';
-import { CannedComment } from './CannedComment.model';
+import { AppUser } from '../../../core/data-models/app-user.model';
 
 @Injectable()
 export class DorFormDataService {
   formData: FormData = new FormData();
   formChanged = new BehaviorSubject<boolean>(false);
   currentDORNumber = new BehaviorSubject<number>(null);
-  recruitName = new Subject<string>();
+  recruitName = new BehaviorSubject<string>(null);
+  getDorID: number;
 
   constructor(private users: UsersService) {}
 
@@ -32,9 +34,15 @@ export class DorFormDataService {
     this.formData.primaryCalls = formData.primaryCalls;
     this.formData.selfInitCalls = formData.selfInitCalls;
     this.formData.shiftDate = formData.shiftDate;
+    this.formData.shiftWorked = formData.shiftWorked;
     this.formData.recruit = recruit;
     this.formData.fto = fto;
     this.formChanged.next(true);
+  }
+
+  setFinalized(): boolean {
+    this.formData.finalized = true;
+    return this.formData.finalized;
   }
 
   setDorCategories(formData, catID) {
@@ -55,8 +63,41 @@ export class DorFormDataService {
       this.formData.dorComments.push(newComment);
       }
     }
-
     this.formChanged.next(true);
+  }
+
+  setDOR(dorData: any[]) {
+    this.formData = new FormData();
+
+    for (let row of dorData) {
+      if (row.rowType === 'comment') {
+        const newComment: CannedComment = new CannedComment(row.commentCatID, row.commentID, row.commentSelected);
+        this.formData.dorComments.push(newComment);
+      }
+
+      if (row.rowType === 'rating') {
+        const newRating: CategoryRating = new CategoryRating(row.ratingCatID, row.rating, row.ratingRemedial, row.ratingOtherComments);
+        this.formData.dorRatings.push(newRating);
+      }
+
+      if (row.rowType === 'general') {
+        const recruit: AppUser = this.users.appUsers.find(a => a.EmployeeID === row.recruit);
+        const fto: AppUser = this.users.appUsers.find(a => a.EmployeeID === row.fto);
+        this.formData.arrestsMade = row.arrestsMade;
+        this.formData.backupCalls = row.backupCalls;
+        this.formData.districtWorked = row.districtWorked;
+        this.formData.phase = row.phase;
+        this.formData.primaryCalls = row.primaryCalls;
+        this.formData.selfInitCalls = row.selfInitCalls;
+        this.formData.shiftDate =  new Date(+((row.shiftDate.toString()).substr(6, 13)));
+        this.formData.recruit = recruit;
+        this.formData.shiftWorked = row.shiftWorked;
+        this.formData.fto = fto;
+        this.formData.dorNumber = row.dor_number;
+        this.recruitName.next(recruit.DisplayName);
+        this.currentDORNumber.next(row.dor_number);
+      }
+    }
   }
 
   updateDorNumber(dorNumber: number) {
@@ -69,4 +110,6 @@ export class DorFormDataService {
     this.formData.clear();
     return this.formData;
   }
+
+  
 }

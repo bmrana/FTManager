@@ -1,3 +1,4 @@
+import { DorResolverService } from './resolvers/dor-resolver.service';
 import { DorGeneralFormComponent } from './../forms/dor/dor-general-form/dor-general-form.component';
 import { DorCategoryFormComponent } from './../forms/dor/dor-category-form/dor-category-form.component';
 import { DorComponent } from './../forms/dor/dor.component';
@@ -25,6 +26,9 @@ const appRoutes: Routes = [
   }},
   { path: 'dor', component: DorComponent, children: [
     { path: '', redirectTo: '/dor/0', pathMatch: 'full'},
+    { path: 'dor', resolve: {
+      dor: DorResolverService
+      }, component: DorGeneralFormComponent },
     { path: '0', component: DorGeneralFormComponent },
     { path: ':id', component: DorCategoryFormComponent },
   ],

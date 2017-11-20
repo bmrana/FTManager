@@ -40,6 +40,7 @@ import { RecentDorComponent } from './dashboard/fto/recent-dor/recent-dor.compon
 import { DashboardService } from './core/services/dashboard.service';
 import { DashboardDORResolver } from './core/resolvers/dashboard-dor-resolver.service';
 import { DashboardDorItemComponent } from './dashboard/dashboard-dor-item/dashboard-dor-item.component';
+import { DorResolverService } from './core/resolvers/dor-resolver.service';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { DashboardDorItemComponent } from './dashboard/dashboard-dor-item/dashbo
               DeleteUserResolverService,
               DorCategoryFormComponent,
               DashboardService,
-              DashboardDORResolver
+              DashboardDORResolver,
+              DorResolverService
             ],
   bootstrap: [AppComponent]
 })

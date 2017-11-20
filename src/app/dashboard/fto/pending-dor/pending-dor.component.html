@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col">
       <h2 class="text-center">Pending DORs</h2>
-      <div *ngFor="let dor of dors; let i = index">
-        <a href="#">
+      <div *ngFor="let dor of dors | userListFilter : 'pending' : 'status'; let i = index">
+        <a class="nav-link" (click)= "getDOR(dor.id)" style="cursor: pointer;">
           <app-dashboard-dor-item [dor]="dor"></app-dashboard-dor-item>
         </a>
       </div>

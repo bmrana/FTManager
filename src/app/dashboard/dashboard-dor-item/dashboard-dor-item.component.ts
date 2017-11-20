@@ -12,7 +12,6 @@ export class DashboardDorItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log((this.dor.shiftDate.toString()).substr(6, 13));
     this.prettyDate = new Date(+((this.dor.shiftDate.toString()).substr(6, 13)));
   }
 

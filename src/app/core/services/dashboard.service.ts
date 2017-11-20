@@ -8,7 +8,7 @@ export class DashboardService {
   constructor() { }
 
   setDashboardDORs(dors: DashboardDOR[]) {
-    console.log(dors);
+    this.dashboardDORs = [];
     this.dashboardDORs = dors;
   }
 }
