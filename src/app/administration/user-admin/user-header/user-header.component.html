@@ -5,8 +5,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Field Training Officers</a>
-      <a class="nav-item nav-link" href="#">Recruit Officers</a>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/administration/users', {outlets: {'list': ['2'], 'person': ['none','2']}}]">Field Training Officers</a></li>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/administration/users', {outlets: {'list': ['3'], 'person': ['none','3']}}]">Recruit Officers</a></li>
     </div>
   </div>
 </nav>

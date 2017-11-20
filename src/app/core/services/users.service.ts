@@ -6,8 +6,9 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class UsersService {
   domainUsers: DomainUser[];
+  domainUsersRetrieved = new Subject<DomainUser[]>();
   currentUser: DomainUser;
-  domainUsersRetrieved = false;
+  currentAppUser: AppUser;
   currentUserRetrieved = new Subject<DomainUser>();
   appUsersChanged = new Subject<AppUser[]>();
   appUsers: AppUser[] = [];
@@ -16,7 +17,7 @@ export class UsersService {
 
   setDomainUsers(dUsers: DomainUser[]) {
     this.domainUsers = dUsers;
-    this.domainUsersRetrieved = true;
+    this.domainUsersRetrieved.next(dUsers);
   }
 
   setCurrentUser(currentUser: DomainUser) {
@@ -25,23 +26,35 @@ export class UsersService {
   }
 
   setAppUsers(appUsers: AppUser[]) {
-    this.appUsers = appUsers;
+    this.appUsers.length = 0;
+    this.appUsers.push(...appUsers);
     this.appUsersChanged.next(this.appUsers.slice());
   }
+
   getAppUsers() {
     return this.appUsers.slice();
   }
 
-  getAppUser(index: number) {
-    return this.appUsers[index];
+  getAppUser(eid): AppUser {
+    const appUser: AppUser = this.appUsers.find(u => u.EmployeeID === eid);
+    return appUser;
   }
 
-  addAppUser(appUser: AppUser) {
+  addAppUser(appUser: AppUser, userType: number) {
     this.appUsers.push(appUser);
     this.appUsersChanged.next(this.appUsers.slice());
   }
 
+  // updateAppUser(index: number, newUser: AppUser) {
+  //   this.appUsers[index] = newUser;
+  //   this.appUsersChanged.next(this.appUsers.slice());
+  // }
+
   getDomainUsers() {
     return this.domainUsers.slice();
   }
+
+  
+
+  
 }

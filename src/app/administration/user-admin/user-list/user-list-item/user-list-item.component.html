@@ -1,8 +1,13 @@
-<a
+<li 
+  class="list-group-item list-group-item-action flex-column align-items-start" 
   style="cursor: pointer;"
-  class="list-group-item"
-  routerLinkActive="active">
-  
-        {{appUser.DisplayName}}
-     
-</a>
+  (click)="onSelected()">
+  <div class="d-flex justify-content-between">
+       <h6>{{appUser.DisplayName}} <small>({{appUser.EmployeeID}})</small></h6> 
+       <div>
+          <span *ngIf="!appUser.Active" class="badge badge-secondary">Inactive</span> 
+          <span *ngIf="appUser.Active" class="badge badge-success ">Active</span> 
+        </div>
+           
+  </div>
+</li>

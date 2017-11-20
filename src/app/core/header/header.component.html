@@ -1,17 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="authLevel != 0 else notAuthorized" data-spy="affix">
   <a class="navbar-brand" routerLink="/">Field Training Manager</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav mr-auto" routerLinkActive="active">
-      <a class="nav-item nav-link active" href="#">Manager</a>
     </div>
-    <div class="navitem dropdown" routerLinkActive="active">
-      <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">User Administration</a>
+    <div class="nav-item dropdown" routerLinkActive="active" *ngIf="authLevel < 3">
+      <a class="nav-link dropdown-toggle" 
+          id="navbarDropdownMenuLink" 
+          role="button"
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false" 
+          style="color: white;">User Administration</a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <a class="dropdown-item" [routerLink]="['/administration/users', {outlets: {'list': ['1'], 'person': ['none']}}]">Field Training Officers</a>
-        <a href="#" class="dropdown-item">Recruit Officers</a>
+        <a class="dropdown-item" [routerLink]="['/administration/users', {outlets: {'list': ['2'], 'person': ['none','2']}}]">Field Training Officers</a>
+        <a class="dropdown-item" [routerLink]="['/administration/users', {outlets: {'list': ['3'], 'person': ['none','3']}}]">Recruit Officers</a>
         <a href="#" class="dropdown-item">Supervisors</a>
         <a href="#" class="dropdown-item">Administrators</a>
       </div>
@@ -21,3 +26,8 @@
     </span>
   </div>
 </nav>
+<ng-template #notAuthorized>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" routerLInk="/">Field Training Manager</a>
+  </nav>
+</ng-template>

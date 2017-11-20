@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-3">
+    <app-dor-nav></app-dor-nav>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-12" style="text-align: center">
+        <h1 class="display-4">Daily Observation Report</h1>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="col-2">
+      </div>
+    </div>
+  </div>
+  <div class="col-3" data-spy="affix" data-offset-top="100">
+        <app-form-status></app-form-status>
+  </div>
+</div>

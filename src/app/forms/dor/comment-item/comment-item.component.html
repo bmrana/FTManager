@@ -1,0 +1,11 @@
+<div class="input-group">
+<span class="input-group-addon">
+  <input type="checkbox">
+</span>
+<span class="input-group-addon" style="width: 120px; background-color: white;" [ngSwitch]="comment.prefix">
+  <label *ngSwitchCase=0 class="badge badge-warning ml-auto mr-auto">Unacceptable</label>
+  <label *ngSwitchCase=1 class="badge badge-info ml-auto mr-auto">Acceptable</label>
+  <label *ngSwitchCase=2 class="badge badge-success ml-auto mr-auto">Superior</label>
+</span>
+<label class="form-control">{{comment.comment}}</label>
+</div>

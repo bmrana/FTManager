@@ -1,0 +1,72 @@
+<form [formGroup]="dorForm">
+  <div>
+    <h4 class="head text-center">{{ title }}</h4>
+    <h1 class="lead">{{ description }}</h1>
+    <hr>
+    <div class="form-row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="rating" class="col-form-label">{{ title }} rating</label>
+          <select id="rating"
+                  class="form-control"
+                  formControlName="rating"
+                  (change)="onRatingSelected($event.target.value)">
+            <option value="" disabled hidden>Choose a rating...</option>
+            <option *ngFor="let rating of ratings" [value]="rating.value">
+              {{ rating.name }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="commentGroupVisible">
+          <div class="form-group" formArrayName="commentsArray">
+            <label for="comments" class="col-form-label">Observations</label>
+              <div class="input-group" *ngFor="let comment of comments | userListFilter: currentPage : 'categoryID'; let i = index" [formGroupName]="i">
+                <span class="input-group-addon">
+                  <input formControlName="selected" type="checkbox">
+                  <input type="text" formControlName="commentID" hidden>
+                </span>
+                <span class="input-group-addon" style="width: 120px; background-color: white;" [ngSwitch]="comment.prefix">
+                  <label *ngSwitchCase=0 class="badge badge-warning ml-auto mr-auto">Unacceptable</label>
+                  <label *ngSwitchCase=1 class="badge badge-info ml-auto mr-auto">Acceptable</label>
+                  <label *ngSwitchCase=2 class="badge badge-success ml-auto mr-auto">Superior</label>
+                </span>
+                <label class="form-control">{{comment.comment}}</label>
+              </div>
+              <!-- <div class="input-group" *ngFor="let comment of dorForm.get('catComments').controls; let i=index" [formGroupName]="i">
+                <span class="input-group-addon">
+                  <input formControlName="categoryComment" type="checkbox">
+                </span>
+                <span class="input-group-addon" style="width: 120px; background-color: white;" [ngSwitch]="comment.prefix">
+                  <label *ngSwitchCase=0 class="badge badge-warning ml-auto mr-auto">Unacceptable</label>
+                  <label *ngSwitchCase=1 class="badge badge-info ml-auto mr-auto">Acceptable</label>
+                  <label *ngSwitchCase=2 class="badge badge-success ml-auto mr-auto">Superior</label>
+                </span>
+                <label class="form-control">{{comment.comment}}</label>
+              </div> -->
+          </div>
+          <div class="form-group" *ngIf="remedialVisible">
+            <label for="remedial" class="col-form-label">Remedial <small class="text-muted">Time spent in minutes</small></label>
+            <input id="remedial" type="number" class="form-control" formControlName="remedial">
+          </div>
+          <div class="form-group">
+            <label for="otherComments" class="col-form-label">Additional Comments</label>
+            <textarea id="otherComments" rows="12" class="form-control" formControlName="otherComments"></textarea>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group text-center">
+          <button class="btn btn-warning" style="cursor:pointer;"
+            (click)="goToPrevious()">
+            Previous<span style="margin-left: 10px;" class="fa fa-arrow-left"></span>
+          </button>
+          <button *ngIf="currentPage < 27" class="btn btn-success btn-info" style="cursor:pointer;"
+            (click)="goToNext()">
+            Next<span style="margin-left: 10px;" class="fa fa-arrow-right"></span>
+          </button> 
+      </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- {{ dorForm.controls.catComments.controls[0].controls.selected.value | json }} -->
+<!-- {{ dorForm.controls.commentsArray.value | json }} -->

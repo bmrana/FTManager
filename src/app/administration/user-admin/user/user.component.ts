@@ -2,7 +2,7 @@ import { AppUser } from './../../../core/data-models/app-user.model';
 import { DomainUser } from './../../../core/data-models/domain-user.model';
 import { UsersService } from './../../../core/services/users.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -12,13 +12,17 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class UserComponent implements OnInit {
   domainUsers: DomainUser[];
-  currentUser: DomainUser;
+  currentUser: AppUser;
   editMode= false;
-  id: number;
+  id: string;
+  type: number;
+  typeName: string;
   personForm: FormGroup;
+  showProgress = false;
 
   constructor(private users: UsersService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
    }
 
   ngOnInit() {
@@ -36,39 +40,65 @@ export class UserComponent implements OnInit {
     this.route.params
       .subscribe(
       (params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
+        this.type = +params['type'];
         this.editMode = params['id'] != null;
+        this.typeName = this.getTypeName(this.type);
         this.initForm();
       }
     );
   }
 
   onSubmit() {
-    const newAppUser: AppUser = new AppUser (
-      this.personForm.value.selectedUser.DisplayName,
-      this.personForm.value.selectedUser.EmailAddress,
-      this.personForm.value.selectedUser.EmployeeID,
-      this.personForm.value.selectedUser.GivenName,
-      this.personForm.value.selectedUser.Surname,
-      this.personForm.value.selectedUser.Description,
-      1,
+    this.showProgress = true;
+    this.currentUser.Active = this.personForm.value.Active;
+      // this.users.addAppUser(this.currentUser, this.type);
+    this.users.currentAppUser = this.currentUser;
+    this.router.navigate(['/administration/users', {outlets: {'person': ['post']}}]);
+  }
+
+  onDelete() {
+    this.showProgress = true;
+    this.users.currentAppUser = this.currentUser;
+    this.router.navigate(['/administration/users', {outlets: {'person': ['delete']}}]);
+  }
+
+  onPersonSelected(userID) {
+    this.currentUser = null;
+    this.currentUser = new AppUser(
+      this.domainUsers[userID].DisplayName,
+      this.domainUsers[userID].EmailAddress,
+      this.domainUsers[userID].EmployeeID,
+      this.domainUsers[userID].GivenName,
+      this.domainUsers[userID].Surname,
+      this.domainUsers[userID].Description,
+      this.personForm.value.Active,
+      this.type
     );
-    this.users.addAppUser(newAppUser);
   }
 
   initForm() {
-    let surname = '';
+    let active = true;
     // let givenname = '';
     // let employeeID = '';
 
     if (this.editMode) {
-      surname = 'Edit';
+      this.currentUser = this.users.getAppUser(this.id);
+      active = this.currentUser.Active;
     }
 
     this.personForm = new FormGroup({
-      'selectedUser': new FormControl()
+      'Active': new FormControl(active)
     });
   }
 
-
+  getTypeName(type: number) {
+    if (type === 2) {
+      return 'FTO';
+    } else if (type === 3) {
+      return 'Recruit Officer';
+    } else {
+      return 'Unknown';
+    }
+  }
 }

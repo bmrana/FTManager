@@ -8,7 +8,7 @@
     <div class="col-12">
       <ul class="list-group">
         <app-user-list-item
-          *ngFor="let appUser of appUsers; let i = index"
+          *ngFor="let appUser of appUsers | userListFilter : listId : 'RoleID'; let i = index"
           [appUser]="appUser"
           [index]="i">
         </app-user-list-item>

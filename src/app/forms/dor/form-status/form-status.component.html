@@ -1,0 +1,51 @@
+<div class="row mt-5 pt-5">
+  <div class="col-10 " *ngIf="currentDorNumber">
+    <div class="row">
+      <div class="col boxed-group border rounded border-secondary">
+        <div class="row">
+          <div class="col-12 border border-top-0 border-left-0 border-right-0 border-secondary p-2">
+            <h4>{{ recruitName }}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 border border-top-0 border-left-0 border-right-0 border-secondary pl-2 py-1">
+            <h1 class="lead">DOR Number: {{ currentDorNumber }}</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 border border-top-0 border-left-0 border-right-0 border-secondary pl-2 py-1">
+            <h1 class="lead">FTO: {{ currentFto }}</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 border border-top-0 border-left-0 border-right-0 border-secondary pl-2 py-1">
+            <h1 class="lead">Shift Date: {{ currentShiftDate }}</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 pl-2 py-1">
+            <h1 class="lead align-middle">Dor Save Status: {{ saveStatus }}</h1>
+          </div>
+          <div class="col-4 pl-2 py-1">
+            <button *ngIf="formChanged" class="btn btn-success" (click)="onSubmit()">Save DOR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6">
+          <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Finalize DOR</span>
+            </label>
+      </div>
+      <div class="col-6">
+
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-2"></div>
+</div>

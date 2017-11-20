@@ -1,3 +1,4 @@
+import { AuthorizationService } from './../services/authorization.service';
 import { WebConnectServiceService } from './../web-services/web-connect-service.service';
 import { UsersService } from './../services/users.service';
 import { DomainUser } from './../data-models/domain-user.model';
@@ -11,9 +12,13 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class HeaderComponent implements OnInit {
   currentUserName: DomainUser;
+  authLevel = 0;
   subscription: Subscription;
+  authSubscription: Subscription;
 
-  constructor(private users: UsersService, private httpService: WebConnectServiceService) { }
+  constructor(private users: UsersService,
+              private httpService: WebConnectServiceService,
+              private auth: AuthorizationService) { }
 
   ngOnInit() {
     // this.currentUserName = this.users.currentUser.DisplayName;
@@ -23,7 +28,12 @@ export class HeaderComponent implements OnInit {
           this.currentUserName = currentUser;
         }
       );
-
+    this.authSubscription = this.auth.authorization
+      .subscribe(
+        (authLevel) => {
+          this.authLevel = authLevel;
+        }
+      );
   }
 
 }

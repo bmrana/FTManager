@@ -5,6 +5,7 @@ export class AppUser {
     public LastName: string;
     public FirstName: string;
     public JobAssignment: string;
+    public Active: boolean;
     public RoleID: number;
 
     constructor(displayName: string,
@@ -13,13 +14,15 @@ export class AppUser {
         firstName: string,
         lastName: string,
         jobAssignment: string,
+        active: boolean,
         roleID: number) {
             this.DisplayName = displayName;
             this.EmailAddress = emailAddress;
             this.EmployeeID = employeeID;
-            this.LastName = firstName;
+            this.LastName = lastName;
             this.FirstName = firstName;
             this.JobAssignment = jobAssignment;
+            this.Active = active;
             this.RoleID = roleID;
         }
 }

@@ -1,7 +1,7 @@
 import { AppUser } from './../../../core/data-models/app-user.model';
 import { UsersService } from './../../../core/services/users.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -9,24 +9,54 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   appUsers: AppUser[];
+  listId: number;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private usersService: UsersService) { }
 
   ngOnInit() {
+    this.appUsers = this.usersService.appUsers;
+    this.appUsers.sort( function(name1, name2) {
+      if (name1.DisplayName < name2.DisplayName) {
+        return -1;
+      } else if (name1.DisplayName > name2.DisplayName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
     this.subscription = this.usersService.appUsersChanged
       .subscribe(
         (appUsers: AppUser[]) => {
           this.appUsers = appUsers;
+          this.appUsers.sort( function(name1, name2) {
+            if (name1.DisplayName < name2.DisplayName) {
+              return -1;
+            } else if (name1.DisplayName > name2.DisplayName) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+        }
+      );
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.listId = +params['type'];
         }
       );
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   onNewPerson() {
-    this.router.navigate(['/administration/users', {outlets: {'person': ['edit']}}]);
+    this.router.navigate(['/administration/users', {outlets: {'person': ['edit', this.listId.toString()]}}]);
   }
 }
