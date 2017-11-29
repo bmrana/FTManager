@@ -19,6 +19,7 @@ export class DorGeneralFormComponent implements OnInit {
   dorData: FormData;
   dorNumberSubscription: Subscription;
   currentDorNumber: number;
+  locked = false;
 
   phases: any[] = [{name: 'Phase 1', value: '1'},
                   {name: 'Phase 2', value: '2'},
@@ -85,21 +86,24 @@ export class DorGeneralFormComponent implements OnInit {
     backupCalls = dor.backupCalls;
     selfInitCalls = dor.selfInitCalls;
     arrestsMade = dor.arrestsMade;
+    this.locked = dor.finalized;
 
     this.dorForm = new FormGroup({
       'recruit': new FormControl(recruit.EmployeeID, Validators.required),
       'fto': new FormControl(fto.EmployeeID, Validators.required),
-      'phase': new FormControl(phase, Validators.required),
-      'shiftDate': new FormControl(dateOfShift, Validators.required),
-      'shiftWorked': new FormControl(shiftWorked, Validators.required),
-      'districtWorked': new FormControl(districtWorked, Validators.required),
-      'primaryCalls': new FormControl(primaryCalls, Validators.required),
-      'backupCalls': new FormControl(backupCalls, Validators.required),
-      'selfInitCalls': new FormControl(selfInitCalls, Validators.required),
-      'arrestsMade': new FormControl(arrestsMade, Validators.required)
+      'phase': new FormControl({value: phase, disabled: this.locked}, Validators.required),
+      'shiftDate': new FormControl({value: dateOfShift, disabled: this.locked}, Validators.required),
+      'shiftWorked': new FormControl({value: shiftWorked, disabled: this.locked}, Validators.required),
+      'districtWorked': new FormControl({value: districtWorked, disabled: this.locked}, Validators.required),
+      'primaryCalls': new FormControl({value: primaryCalls, disabled: this.locked}, Validators.required),
+      'backupCalls': new FormControl({value: backupCalls, disabled: this.locked}, Validators.required),
+      'selfInitCalls': new FormControl({value: selfInitCalls, disabled: this.locked}, Validators.required),
+      'arrestsMade': new FormControl({value: arrestsMade, disabled: this.locked}, Validators.required),
     });
+
   }
   save(): boolean {
+    console.log('save');
     if (!this.dorForm.valid) {
       return false;
     }

@@ -16,6 +16,7 @@ export class DorFormDataService {
   formChanged = new BehaviorSubject<boolean>(false);
   currentDORNumber = new BehaviorSubject<number>(null);
   recruitName = new BehaviorSubject<string>(null);
+  saveTrigger = new Subject<number>();
   getDorID: number;
 
   constructor(private users: UsersService) {}
@@ -93,6 +94,8 @@ export class DorFormDataService {
         this.formData.recruit = recruit;
         this.formData.shiftWorked = row.shiftWorked;
         this.formData.fto = fto;
+        this.formData.finalized = row.finalized;
+        this.formData.reviewed = row.reviewed;
         this.formData.dorNumber = row.dor_number;
         this.recruitName.next(recruit.DisplayName);
         this.currentDORNumber.next(row.dor_number);
@@ -108,6 +111,7 @@ export class DorFormDataService {
 
   resetFormData(): FormData {
     this.formData.clear();
+    console.log(this.formData);
     return this.formData;
   }
 

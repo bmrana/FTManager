@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { DORCategory } from './../../../core/data-models/dor-category.model';
 import { CannedComment } from './../data/CannedComment.model';
 import { DORComment } from './../../../core/data-models/dor-comment.model';
@@ -16,7 +17,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./dor-category-form.component.css']
 })
 export class DorCategoryFormComponent implements OnInit {
-  
+  locked = false;
   title: string;
   description: string;
   ratings: DORRating[];
@@ -28,6 +29,7 @@ export class DorCategoryFormComponent implements OnInit {
   currentPage: number;
   commentGroupVisible = false;
   remedialVisible = false;
+  formSavedTrigger = new Subject<boolean>();
 
   constructor(private lookups: DorService,
               private router: Router,
@@ -48,6 +50,13 @@ export class DorCategoryFormComponent implements OnInit {
         this.initForm();
       }
     );
+
+    this.dorDataService.saveTrigger
+      .subscribe(
+        (trigger) => {
+          this.save();
+        }
+      );
   }
 
   onRatingSelected(value) {
@@ -88,21 +97,22 @@ export class DorCategoryFormComponent implements OnInit {
     otherComments = dorRating ? dorRating.otherComments : '';
     remedial = dorRating ? dorRating.remedial : 0;
     catComments = dorComments ? dorComments : [];
+    this.locked = this.dorData.finalized;
 
     for (let comment of this.comments) {
       if (comment.categoryID === this.currentPage) {
         if (dorComments.find(c => c.commentID === comment.id  && c.selected === true)) {
           commentsArray.push(
             new FormGroup({
-              'selected': new FormControl(true),
-              'commentID': new FormControl(comment.id)
+              'selected': new FormControl({value: true, disabled: this.locked}),
+              'commentID': new FormControl({value: comment.id, disabled: this.locked})
             })
           );
         } else {
           commentsArray.push(
             new FormGroup({
-              'selected': new FormControl(false),
-              'commentID': new FormControl(comment.id)
+              'selected': new FormControl({value: false, disabled: this.locked}),
+              'commentID': new FormControl({value: comment.id, disabled: this.locked})
             })
           );
         }
@@ -110,14 +120,16 @@ export class DorCategoryFormComponent implements OnInit {
     }
 
     this.dorForm = new FormGroup({
-      'rating': new FormControl(rating),
-      'otherComments': new FormControl(otherComments),
-      'remedial': new FormControl(remedial),
+      'rating': new FormControl({value: rating, disabled: this.locked}),
+      'otherComments': new FormControl({value: otherComments, disabled: this.locked}),
+      'remedial': new FormControl({value: remedial, disabled: this.locked}),
       'commentsArray': commentsArray
     });
+
   }
 
   save(): boolean {
+    console.log('save');
     if (!this.dorForm.valid) {
       return false;
     }
@@ -137,4 +149,5 @@ export class DorCategoryFormComponent implements OnInit {
       this.router.navigate(['../' + --this.currentPage], { relativeTo: this.route });
     }
   }
+
 }

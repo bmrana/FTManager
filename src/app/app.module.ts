@@ -22,7 +22,6 @@ import { HomeComponent } from './home/home.component';
 import { UserListItemComponent } from './administration/user-admin/user-list/user-list-item/user-list-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserListFilterPipe } from './core/pipes/user-list-filter.pipe';
-import { UserInfoComponent } from './dashboard/user-info/user-info.component';
 import { ErrorComponent } from './home/error/error.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashHeaderComponent } from './dashboard/dash-header/dash-header.component';
@@ -41,6 +40,10 @@ import { DashboardService } from './core/services/dashboard.service';
 import { DashboardDORResolver } from './core/resolvers/dashboard-dor-resolver.service';
 import { DashboardDorItemComponent } from './dashboard/dashboard-dor-item/dashboard-dor-item.component';
 import { DorResolverService } from './core/resolvers/dor-resolver.service';
+import { DorsComponent } from './dashboard/dors/dors.component';
+import { SectionComponent } from './dashboard/section/section.component';
+import { EoprsComponent } from './dashboard/section/eoprs/eoprs.component';
+import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,6 @@ import { DorResolverService } from './core/resolvers/dor-resolver.service';
     HomeComponent,
     UserListItemComponent,
     UserListFilterPipe,
-    UserInfoComponent,
     ErrorComponent,
     DashboardComponent,
     DashHeaderComponent,
@@ -70,6 +72,10 @@ import { DorResolverService } from './core/resolvers/dor-resolver.service';
     UnreviewedDorComponent,
     RecentDorComponent,
     DashboardDorItemComponent,
+    DorsComponent,
+    SectionComponent,
+    EoprsComponent,
+    DrjsComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +96,8 @@ import { DorResolverService } from './core/resolvers/dor-resolver.service';
               DorCategoryFormComponent,
               DashboardService,
               DashboardDORResolver,
-              DorResolverService
+              DorResolverService,
+              SectionComponent
             ],
   bootstrap: [AppComponent]
 })

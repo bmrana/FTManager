@@ -16,7 +16,7 @@
           type="button" style="cursor: pointer;"
           (click)="onFinalize();" 
           data-toggle="modal" 
-          data-target="#confirmFinalize">FINALIZE!</button>
+          data-target="#confirmFinalize">FINALIZE!<span style="margin-left: 10px;" class="fa fa-check-square-o"></span></button>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
             <h1 class="lead align-middle">Dor Save Status: {{ saveStatus }}</h1>
           </div>
           <div class="col-4 pl-2 py-1">
-            <button *ngIf="formChanged" class="btn btn-success" (click)="onSubmit()">Save DOR</button>
+            <button *ngIf="formChanged && !locked" class="btn btn-success" (click)="onSubmit()">Save DOR<span style="margin-left: 10px;" class="fa fa-floppy-o"></span></button>
           </div>
         </div>
       </div>
@@ -62,12 +62,18 @@
       </div>
       <div class="col-6">
         <button
+         *ngIf="!locked;"
           class="btn btn-danger"
           style="cursor: pointer;"
           type="button" 
           data-toggle="modal" 
           data-target="#confirmFinalize"
-          style="width: 100%">FINALIZE</button>
+          style="width: 100%">FINALIZE<span style="margin-left: 10px;" class="fa fa-exclamation"></span></button>
+      </div>
+      <div class="row mt-4" *ngIf="locked">
+        <div class="col-12 text-center">
+            <h3 class="text-danger">DOR IS FINALIZED</h3>            
+        </div>
       </div>
     </div>
 

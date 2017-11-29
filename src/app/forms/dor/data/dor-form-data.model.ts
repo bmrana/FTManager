@@ -9,8 +9,8 @@ export class FormData {
     public phase = '';
     public dorNumber: number;
     public shiftDate: Date = new Date();
-    public finalized: boolean;
-    public reviewed: boolean;
+    public finalized = false;
+    public reviewed = false;
     public shiftWorked = '';
     public districtWorked = '';
     public primaryCalls = 0;
@@ -48,21 +48,23 @@ export class FormData {
     //             }
 
     clear() {
-        this.recruit = null;
-        this.fto = null;
+        this.recruit = new AppUser('', '', '', '', '', '', null, null);
+        this.fto = new AppUser('', '', '', '', '', '', null, null);
         this.phase = '';
-        this.shiftDate = null;
+        this.shiftDate = new Date();
         this.shiftWorked = '';
         this.districtWorked = '';
-        this.dorNumber = null;
-        this.primaryCalls = null;
-        this.backupCalls = null;
-        this.selfInitCalls = null;
-        this.arrestsMade = null;
-        this.dorRatings = null;
-        this.dorComments = null;
-        this.finalized = null;
-        this.reviewed = null;
+        this.dorNumber = 0;
+        this.primaryCalls = 0;
+        this.backupCalls = 0;
+        this.selfInitCalls = 0;
+        this.arrestsMade = 0;
+        this.dorRatings = [
+            new CategoryRating(0, 0, 0, '')
+        ];
+        this.dorComments = [];
+        this.finalized = false;
+        this.reviewed = false;
     }
 }
 

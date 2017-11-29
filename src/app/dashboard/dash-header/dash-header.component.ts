@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { AuthorizationService } from '../../core/services/authorization.service';
 
 @Component({
   selector: 'app-dash-header',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dash-header.component.css']
 })
 export class DashHeaderComponent implements OnInit {
+  authLevel: number;
 
-  constructor() { }
+  constructor(private auth: AuthorizationService) { }
 
   ngOnInit() {
+    this.authLevel = this.auth.currentAppUser.RoleID;
   }
 
 }

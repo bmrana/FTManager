@@ -1,3 +1,4 @@
+import { DorsComponent } from './../dashboard/dors/dors.component';
 import { DorResolverService } from './resolvers/dor-resolver.service';
 import { DorGeneralFormComponent } from './../forms/dor/dor-general-form/dor-general-form.component';
 import { DorCategoryFormComponent } from './../forms/dor/dor-category-form/dor-category-form.component';
@@ -5,7 +6,6 @@ import { DorComponent } from './../forms/dor/dor.component';
 import { DashboardComponent } from './../dashboard/dashboard.component';
 import { DeleteUserResolverService } from './resolvers/delete-user-resolver.service';
 import { ErrorComponent } from './../home/error/error.component';
-import { UserInfoComponent } from './../dashboard/user-info/user-info.component';
 import { AppUserResolver } from './resolvers/appUser-resolver.service';
 import { HomeComponent } from './../home/home.component';
 import { UserStartComponent } from './../administration/user-admin/user-start/user-start.component';
@@ -17,13 +17,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardDOR } from './data-models/dashboard-dor.model';
 import { DashboardDORResolver } from './resolvers/dashboard-dor-resolver.service';
+import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, },
   { path: 'notAuthorized', component: ErrorComponent },
   { path: 'dashboard', component: DashboardComponent, resolve: {
     dashboardDORS: DashboardDORResolver
-  }},
+    }, children: [
+      { path: '', redirectTo: 'dors', pathMatch: 'full'},
+      { path: ':section', component: SectionComponent }
+    ]
+  },
   { path: 'dor', component: DorComponent, children: [
     { path: '', redirectTo: '/dor/0', pathMatch: 'full'},
     { path: 'dor', resolve: {
