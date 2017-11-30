@@ -16,6 +16,7 @@ export class DashboardDORResolver implements Resolve<DashboardDOR[]> {
                 private authService: AuthorizationService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DashboardDOR[]> {
+        console.log('resolver');
         return this.httpService.getDashboardDORs(this.authService.currentAppUser);
     }
 }

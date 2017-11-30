@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/pairwise';
@@ -9,11 +10,11 @@ import 'rxjs/add/operator/pairwise';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  constructor(private authService: AuthService) {
-    // this.router.events.pairwise()
-    //   .subscribe((event) => {
-    //     console.log(event);
-    //   });
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.pairwise()
+      .subscribe((event) => {
+        console.log(event);
+      });
   }
 
   ngOnInit() {
@@ -24,5 +25,9 @@ export class AppComponent implements OnInit {
 
   onLogin() {
     this.authService.login();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

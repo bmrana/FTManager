@@ -29,18 +29,17 @@ export class UserComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.domainUsers = {...this.httpService.policeUsers };
-console.log(this.domainUsers);
+    this.domainUsers = this.httpService.policeUsers;
     
-    // this.domainUsers.sort( function(name1, name2) {
-    //   if (name1.displayName < name2.displayName) {
-    //     return -1;
-    //   } else if (name1.displayName > name2.displayName) {
-    //     return 1;
-    //   } else {
-    //     return 0;
-    //   }
-    // });
+    this.domainUsers.sort( function(name1, name2) {
+      if (name1.displayName < name2.displayName) {
+        return -1;
+      } else if (name1.displayName > name2.displayName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
 
     this.route.params
       .subscribe(

@@ -45,6 +45,7 @@ import { SectionComponent } from './dashboard/section/section.component';
 import { EoprsComponent } from './dashboard/section/eoprs/eoprs.component';
 import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
 import { AuthService } from './core/services/auth.service';
+import { DerpPipe } from './core/pipes/derp.pipe';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { AuthService } from './core/services/auth.service';
     SectionComponent,
     EoprsComponent,
     DrjsComponent,
+    DerpPipe,
   ],
   imports: [
     BrowserModule,

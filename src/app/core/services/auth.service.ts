@@ -1,13 +1,15 @@
+import { Subject } from 'rxjs/Subject';
 import { Injectable, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as hello from 'hellojs/dist/hello.all.js';
 
 import { Configs } from '../configs';
 
 @Injectable()
 export class AuthService {
-
-  constructor(private zone: NgZone, private router: Router) { }
+  loginFinished = new Subject<boolean>();
+  
+  constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) { }
 
   initAuth() {
     hello.init(
@@ -24,15 +26,13 @@ export class AuthService {
       },
       { redirect_uri: window.location.href }
     );
-    console.log('initAuth: ' + window.location.href);
   }
 
   login() {
     hello('msft').login({ scope: Configs.scope }).then(
       () => {
-        this.zone.run(() => {
-          this.router.navigate(['home']);
-        });
+        this.zone.run(() => this.router.navigate(['home'])
+        );
       },
       e => console.error(e.error.message)
     );

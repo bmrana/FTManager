@@ -17,6 +17,7 @@ export class UsersService {
   appUsersChanged = new Subject<AppUser[]>();
   appUsers: AppUser[] = [];
 
+
   constructor() { }
 
   setDomainUsers(dUsers: DomainUser[]) {

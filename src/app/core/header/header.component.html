@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark" *ngIf="authLevel != 0 else notAuthorized" data-spy="affix">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark"  data-spy="affix">
   <a class="navbar-brand" routerLink="/dashboard">Field Training Manager</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -26,8 +26,8 @@
     </span>
   </div>
 </nav>
-<ng-template #notAuthorized>
+<!-- <ng-template #notAuthorized>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" routerLInk="/">Field Training Manager</a>
   </nav>
-</ng-template>
+</ng-template> -->

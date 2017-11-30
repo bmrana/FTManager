@@ -28,6 +28,7 @@ export class DorFormDataService {
   setDorData(formData) {
     const recruit = this.users.appUsers.find(a => a.EmployeeID === formData.recruit);
     const fto = this.users.appUsers.find(a => a.EmployeeID === formData.fto);
+    console.log(fto);
     this.formData.arrestsMade = formData.arrestsMade;
     this.formData.backupCalls = formData.backupCalls;
     this.formData.districtWorked = formData.districtWorked;
@@ -111,7 +112,6 @@ export class DorFormDataService {
 
   resetFormData(): FormData {
     this.formData.clear();
-    console.log(this.formData);
     return this.formData;
   }
 

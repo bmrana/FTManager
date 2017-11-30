@@ -103,7 +103,6 @@ export class DorGeneralFormComponent implements OnInit {
 
   }
   save(): boolean {
-    console.log('save');
     if (!this.dorForm.valid) {
       return false;
     }

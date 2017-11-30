@@ -10,10 +10,10 @@ import { AuthorizationService } from '../../core/services/authorization.service'
 export class DashHeaderComponent implements OnInit {
   authLevel: number;
 
-  constructor(private auth: AuthorizationService) { }
+  constructor(private auth: AuthorizationService) {
+    this.authLevel = this.auth.currentAppUser.RoleID; }
 
   ngOnInit() {
-    this.authLevel = this.auth.currentAppUser.RoleID;
   }
 
 }

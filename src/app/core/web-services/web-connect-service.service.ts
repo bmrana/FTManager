@@ -23,7 +23,8 @@ import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 @Injectable()
 export class WebConnectServiceService {
   headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
-  serviceURL = 'http://localhost:62675/';
+  // serviceURL = 'http://localhost:57321/';
+  serviceURL = 'http://services.dentontraining.com/';
   url = 'https://graph.microsoft.com';
   policeUsers: MicrosoftGraph.User[];
 
@@ -86,9 +87,7 @@ export class WebConnectServiceService {
           .get()
           .then (
             (res) => {
-              console.log(res);
-              this.policeUsers = res;
-              console.log(this.policeUsers);
+              this.policeUsers = res.value;
               this.users.setDomainUsers(res);
               return res;
             }
@@ -97,15 +96,14 @@ export class WebConnectServiceService {
     }
 
     initializeAppData() {
-     
-      this.http.get<AppUser[]>(this.serviceURL + 'AppAdminService.svc/fetchAppUsers')
+      this.http.get<AppUser[]>(this.serviceURL + 'FieldTraining/AppAdmin/AppAdminService.svc/fetchAppUsers')
       .subscribe(
         (appUsers: AppUser[]) => {
           this.users.setAppUsers(appUsers);
         }
       );
       
-      this.http.get<any>(this.serviceURL + 'DOR/lookupService.svc/fetchLookupValues')
+      this.http.get<any>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/fetchLookupValues')
       .subscribe(
         (lookupValues: any[]) => {
           this.dorService.populateLists(lookupValues);
@@ -115,7 +113,7 @@ export class WebConnectServiceService {
     }
 
     updateAppUser(appUser: AppUser) {
-      return this.http.post(this.serviceURL + 'AppAdminService.svc/updateAppUser', appUser, {headers: this.headers})
+      return this.http.post(this.serviceURL + 'FieldTraining/AppAdmin/AppAdminService.svc/updateAppUser', appUser, {headers: this.headers})
         .map(
           (appUserList: AppUser[]) => {
             this.users.setAppUsers(appUserList);
@@ -128,7 +126,7 @@ export class WebConnectServiceService {
       // const deletedUser: Object[] = [
       //   'EmployeeID': appUser.EmployeeID, appUser.RoleID
       // ];
-      return this.http.post(this.serviceURL + 'AppAdminService.svc/deleteAppUser', appUser, {headers: this.headers})
+      return this.http.post(this.serviceURL + 'FieldTraining/AppAdmin/AppAdminService.svc/deleteAppUser', appUser, {headers: this.headers})
         .map(
           (appUserList: AppUser[]) => {
             this.users.setAppUsers(appUserList);
@@ -138,7 +136,7 @@ export class WebConnectServiceService {
     }
 
     insertDOR(formData: FormData) {
-      return this.http.post(this.serviceURL + 'DOR/lookupService.svc/insertDOR', formData, {headers: this.headers})
+      return this.http.post(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/insertDOR', formData, {headers: this.headers})
       .subscribe(
         (currentDOR: number) => {
           this.dorFormService.updateDorNumber(currentDOR);
@@ -148,7 +146,7 @@ export class WebConnectServiceService {
     }
 
     insertFinalized(formData: FormData) {
-      return this.http.post(this.serviceURL + 'DOR/lookupService.svc/insertDOR', formData, {headers: this.headers})
+      return this.http.post(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/insertDOR', formData, {headers: this.headers})
       .map(
         (currentDOR: number) => {
           this.dorFormService.updateDorNumber(currentDOR);
@@ -161,11 +159,12 @@ export class WebConnectServiceService {
       let dashParameters = new HttpParams();
       dashParameters = dashParameters.append('EmployeeID', user.EmployeeID);
       dashParameters = dashParameters.append('RoleID', user.RoleID.toString());
-      return this.http.get<DashboardDOR[]>(this.serviceURL + 'DOR/lookupService.svc/getDashboardDORs',
+      return this.http.get<DashboardDOR[]>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/getDashboardDORs',
         {params: dashParameters})
         .map(
           (dors: DashboardDOR[]) => {
             this.dashboardService.setDashboardDORs(dors);
+            console.log('dors returned from query');
             return dors;
           }
         );
@@ -175,7 +174,7 @@ export class WebConnectServiceService {
       let dorParams = new HttpParams();
       dorParams = dorParams.append('dorID', dorID);
 
-      return this.http.get<any[]>(this.serviceURL + 'DOR/lookupService.svc/getDOR',
+      return this.http.get<any[]>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/getDOR',
         {params: dorParams})
         .map(
           (dor: any[]) => {

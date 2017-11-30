@@ -6,10 +6,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DashboardService {
   dashboardDORs: DashboardDOR[];
-  
-  constructor() { }
 
-  
+  constructor() { }
 
   setDashboardDORs(dors: DashboardDOR[]) {
     this.dashboardDORs = [];

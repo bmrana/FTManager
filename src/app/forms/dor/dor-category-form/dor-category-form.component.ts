@@ -129,8 +129,8 @@ export class DorCategoryFormComponent implements OnInit {
   }
 
   save(): boolean {
-    console.log('save');
-    if (!this.dorForm.valid) {
+    console.log(this.dorForm);
+    if (!this.dorForm.valid && !this.dorForm.disabled) {
       return false;
     }
 

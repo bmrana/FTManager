@@ -21,8 +21,8 @@
               </select> -->
               <select id="userSelector" (change)="onPersonSelected($event.target.value)">
                 <option value="" selected disabled hidden>Choose a police user...</option>
-                <option *ngFor="let user of domainUsers; let i = index" [value]="i">
-                    {{user.displayName}} ({{user.id}})                    
+                <option *ngFor="let user of domainUsers | derp; let i = index" [value]="i">
+                    {{user.displayName}} ({{user.mail}})                    
                 </option>
               </select>
           </div>

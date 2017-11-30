@@ -24,7 +24,6 @@ export class AuthorizationService {
       .subscribe(
         (domainUsers) => {
           this.duSet = true;
-          console.log('duSubscription');
           this.authorizeUser();
         }
       );
@@ -34,7 +33,6 @@ export class AuthorizationService {
         (currentUser) => {
           this.cuSet = true;
           this.currentUser = currentUser;
-          console.log('cuSubscription');
           this.authorizeUser();
         }
       );
@@ -45,7 +43,6 @@ export class AuthorizationService {
         (appUsers) => {
           this.appuSet = true;
           this.appUsers = appUsers;
-          console.log('appuSubscription')
           this.authorizeUser();
         }
       );

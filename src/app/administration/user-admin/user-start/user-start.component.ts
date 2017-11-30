@@ -10,6 +10,7 @@ export class UserStartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('person Start');
   }
 
 }

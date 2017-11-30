@@ -1,3 +1,4 @@
+import { AuthService } from './../core/services/auth.service';
 import { DashboardDOR } from './../core/data-models/dashboard-dor.model';
 import { DashboardService } from './../core/services/dashboard.service';
 import { DorService } from './../core/services/dor.service';
@@ -8,6 +9,8 @@ import { WebConnectServiceService } from './../core/web-services/web-connect-ser
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+
 
 @Component({
   selector: 'app-home',
@@ -20,7 +23,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   appUsersSubscription: Subscription;
   domainUsersSubscription: Subscription;
   lookupsSubscription: Subscription;
+  meSubscription: Subscription;
 
+  meName: MicrosoftGraph.User;
   currentUserLoaded = false;
   appUsersLoaded = false;
   domainUsersLoaded = false;
@@ -35,11 +40,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     private dorService: DorService,
     private dashboardService: DashboardService,
     private auth: AuthorizationService,
+    private auth0: AuthService,
     private router: Router) { }
 
   ngOnInit() {
     this.httpService.initializeAppData();
     this.openInitModal.nativeElement.click();
+
+    this.meSubscription = this.httpService.getMe()
+    .subscribe(
+      (currentUser: MicrosoftGraph.User) => {
+        this.meName = currentUser;
+      }
+    );
 
     this.domainUsersSubscription = this.httpService.getPoliceUsers()
       .subscribe(
@@ -86,11 +99,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate(['notAuthorized']);
       } else {
         this.openInitModal.nativeElement.click();
-        this.router.navigate(['dashboard']);
+        // this.router.navigate(['dashboard']);
+        this.auth0.loginFinished.next(true);
       }
     }
   }
-  
+
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
   }
