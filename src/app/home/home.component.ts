@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.httpService.initializeAppData();
     this.openInitModal.nativeElement.click();
 
-    this.domainUsersSubscription = this.users.domainUsersRetrieved
+    this.domainUsersSubscription = this.httpService.getPoliceUsers()
       .subscribe(
       (domainUsers) => {
         this.domainUsersLoaded = true;

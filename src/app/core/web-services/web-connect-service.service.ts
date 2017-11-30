@@ -6,18 +6,26 @@ import { AppUser } from './../data-models/app-user.model';
 import { UsersService } from './../services/users.service';
 import { DomainUser } from './../data-models/domain-user.model';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { HttpClient,
           HttpParams,
           HttpRequest,
           HttpErrorResponse,
           HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
 import { FormData } from '../../forms/dor/data/dor-form-data.model';
+import * as hello from 'hellojs/dist/hello.all.js';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/fromPromise';
+import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 
 @Injectable()
 export class WebConnectServiceService {
   headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
   serviceURL = 'http://localhost:62675/';
+  url = 'https://graph.microsoft.com';
+  policeUsers: MicrosoftGraph.User[];
 
   constructor(
     private http: HttpClient,
@@ -36,26 +44,67 @@ export class WebConnectServiceService {
     //   );
     // }
 
-    initializeAppData() {
-      this.http.get<DomainUser>(this.serviceURL + 'ADService.svc/getCurrentUser')
-      .subscribe(
-        (currentUser) => {
-          this.users.setCurrentUser(currentUser);
+    getAccessToken() {
+      const msft = hello('msft').getAuthResponse();
+      const accessToken = msft.access_token;
+      return accessToken;
+    }
+
+    getClient(): MicrosoftGraphClient.Client {
+      var client = MicrosoftGraphClient.Client.init(
+        {
+          authProvider: (done) => {
+            done(null, this.getAccessToken());
+          }
         }
       );
+      return client;
+    }
+  
+    getMe(): Observable<MicrosoftGraph.User>
+    {
+      var client = this.getClient();
+      return Observable.fromPromise(client
+        .api('me')
+        .select('displayName, mail, userPrincipalName, id')
+        .get()
+        .then (
+          (res) => {
+            this.users.setCurrentUser(res);
+            return res;
+          }
+        )
+      );
+    }
+  
+    getPoliceUsers(): Observable<MicrosoftGraph.User[]>
+    {
+      var client = this.getClient();
+      return Observable.fromPromise(
+        client
+          .api("myorganization/users?$filter=startsWith(Department, 'Police')&$top=999")
+          .get()
+          .then (
+            (res) => {
+              console.log(res);
+              this.policeUsers = res;
+              console.log(this.policeUsers);
+              this.users.setDomainUsers(res);
+              return res;
+            }
+          )
+      );
+    }
+
+    initializeAppData() {
+     
       this.http.get<AppUser[]>(this.serviceURL + 'AppAdminService.svc/fetchAppUsers')
       .subscribe(
         (appUsers: AppUser[]) => {
           this.users.setAppUsers(appUsers);
         }
       );
-      this.http.get<DomainUser[]>(this.serviceURL + 'ADService.svc/getUsers')
-      .subscribe(
-        (domainUsers) => {
-          this.users.setDomainUsers(domainUsers);
-          return domainUsers;
-        }
-      );
+      
       this.http.get<any>(this.serviceURL + 'DOR/lookupService.svc/fetchLookupValues')
       .subscribe(
         (lookupValues: any[]) => {

@@ -1,7 +1,11 @@
+import { WebConnectServiceService } from './../web-services/web-connect-service.service';
 import { AppUser } from './../data-models/app-user.model';
 import { DomainUser } from './../data-models/domain-user.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable()
 export class UsersService {

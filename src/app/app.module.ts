@@ -44,6 +44,7 @@ import { DorsComponent } from './dashboard/dors/dors.component';
 import { SectionComponent } from './dashboard/section/section.component';
 import { EoprsComponent } from './dashboard/section/eoprs/eoprs.component';
 import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
+import { AuthService } from './core/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
               DashboardService,
               DashboardDORResolver,
               DorResolverService,
-              SectionComponent
+              SectionComponent,
+              AuthService
             ],
   bootstrap: [AppComponent]
 })

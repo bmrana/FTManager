@@ -10,7 +10,7 @@ import { AuthorizationService } from '../services/authorization.service';
 
 
 @Injectable()
-export class DashboardDORResolver implements Resolve<DashboardDOR[]>{
+export class DashboardDORResolver implements Resolve<DashboardDOR[]> {
     constructor(private router: Router,
                 private httpService: WebConnectServiceService,
                 private authService: AuthorizationService) {}

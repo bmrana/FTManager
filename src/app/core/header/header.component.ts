@@ -4,6 +4,8 @@ import { UsersService } from './../services/users.service';
 import { DomainUser } from './../data-models/domain-user.model';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  currentUserName: DomainUser;
+  currentUserName: MicrosoftGraph.User;
   authLevel = 0;
   subscription: Subscription;
   authSubscription: Subscription;
@@ -22,9 +24,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // this.currentUserName = this.users.currentUser.DisplayName;
-    this.subscription = this.users.currentUserRetrieved
+    this.subscription = this.httpService.getMe()
       .subscribe(
-        (currentUser: DomainUser) => {
+        (currentUser: MicrosoftGraph.User) => {
           this.currentUserName = currentUser;
         }
       );

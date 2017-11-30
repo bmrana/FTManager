@@ -1,6 +1,4 @@
-import { Router } from '@angular/router';
-import { WebConnectServiceService } from './core/web-services/web-connect-service.service';
-
+import { AuthService } from './core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/pairwise';
 @Component({
@@ -11,7 +9,7 @@ import 'rxjs/add/operator/pairwise';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  constructor(private httpService: WebConnectServiceService, private router: Router) {
+  constructor(private authService: AuthService) {
     // this.router.events.pairwise()
     //   .subscribe((event) => {
     //     console.log(event);
@@ -20,6 +18,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // this.httpService.fetchAppUsers();
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    this.authService.initAuth();
+  }
+
+  onLogin() {
+    this.authService.login();
   }
 }

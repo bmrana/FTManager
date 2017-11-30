@@ -22,7 +22,7 @@
               <select id="userSelector" (change)="onPersonSelected($event.target.value)">
                 <option value="" selected disabled hidden>Choose a police user...</option>
                 <option *ngFor="let user of domainUsers; let i = index" [value]="i">
-                    {{user.DisplayName}} ({{user.EmployeeID}})                    
+                    {{user.displayName}} ({{user.id}})                    
                 </option>
               </select>
           </div>
@@ -35,7 +35,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between">
-          <h3>{{currentUser.DisplayName}}</h3>
+          <h3>{{currentUser.displayName}}</h3>
           <h5>
             <input type="checkbox"
               id="activeUser"

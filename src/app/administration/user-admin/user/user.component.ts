@@ -1,9 +1,11 @@
+import { WebConnectServiceService } from './../../../core/web-services/web-connect-service.service';
 import { AppUser } from './../../../core/data-models/app-user.model';
 import { DomainUser } from './../../../core/data-models/domain-user.model';
 import { UsersService } from './../../../core/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
 
 @Component({
   selector: 'app-user',
@@ -22,20 +24,23 @@ export class UserComponent implements OnInit {
 
   constructor(private users: UsersService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private httpService: WebConnectServiceService) {
    }
 
   ngOnInit() {
-    this.domainUsers = this.users.getDomainUsers();
-    this.domainUsers.sort( function(name1, name2) {
-      if (name1.DisplayName < name2.DisplayName) {
-        return -1;
-      } else if (name1.DisplayName > name2.DisplayName) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+    this.domainUsers = {...this.httpService.policeUsers };
+console.log(this.domainUsers);
+    
+    // this.domainUsers.sort( function(name1, name2) {
+    //   if (name1.displayName < name2.displayName) {
+    //     return -1;
+    //   } else if (name1.displayName > name2.displayName) {
+    //     return 1;
+    //   } else {
+    //     return 0;
+    //   }
+    // });
 
     this.route.params
       .subscribe(
@@ -66,12 +71,12 @@ export class UserComponent implements OnInit {
   onPersonSelected(userID) {
     this.currentUser = null;
     this.currentUser = new AppUser(
-      this.domainUsers[userID].DisplayName,
-      this.domainUsers[userID].EmailAddress,
-      this.domainUsers[userID].EmployeeID,
-      this.domainUsers[userID].GivenName,
-      this.domainUsers[userID].Surname,
-      this.domainUsers[userID].Description,
+      this.domainUsers[userID].displayName,
+      this.domainUsers[userID].mail,
+      this.domainUsers[userID].id,
+      this.domainUsers[userID].givenName,
+      this.domainUsers[userID].surname,
+      this.domainUsers[userID].jobTitle,
       this.personForm.value.Active,
       this.type
     );

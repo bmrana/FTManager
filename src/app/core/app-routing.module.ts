@@ -20,7 +20,7 @@ import { DashboardDORResolver } from './resolvers/dashboard-dor-resolver.service
 import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, },
+  { path: 'home', component: HomeComponent, },
   { path: 'notAuthorized', component: ErrorComponent },
   { path: 'dashboard', component: DashboardComponent, resolve: {
     dashboardDORS: DashboardDORResolver
