@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { DashboardService } from './../services/dashboard.service';
 import { DashboardDOR } from './../data-models/dashboard-dor.model';
 import { DorFormDataService } from './../../forms/dor/data/dor-form-data.service';
@@ -24,9 +25,10 @@ import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 export class WebConnectServiceService {
   headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
   // serviceURL = 'http://localhost:57321/';
-  serviceURL = 'http://services.dentontraining.com/';
+  serviceURL = 'https://services.dentontraining.com/';
   url = 'https://graph.microsoft.com';
   policeUsers: MicrosoftGraph.User[];
+  token = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -48,6 +50,7 @@ export class WebConnectServiceService {
     getAccessToken() {
       const msft = hello('msft').getAuthResponse();
       const accessToken = msft.access_token;
+      this.token.next(true);
       return accessToken;
     }
 
@@ -150,6 +153,7 @@ export class WebConnectServiceService {
       .map(
         (currentDOR: number) => {
           this.dorFormService.updateDorNumber(currentDOR);
+          console.log('insert');
           return currentDOR;
         }
       );
@@ -164,7 +168,7 @@ export class WebConnectServiceService {
         .map(
           (dors: DashboardDOR[]) => {
             this.dashboardService.setDashboardDORs(dors);
-            console.log('dors returned from query');
+            console.log(dors);
             return dors;
           }
         );

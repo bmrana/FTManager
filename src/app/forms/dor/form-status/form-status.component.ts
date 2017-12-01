@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { WebConnectServiceService } from '../../../core/web-services/web-connect-service.service';
 import { DorFormDataService } from '../data/dor-form-data.service';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   selector: 'app-form-status',
@@ -18,10 +19,13 @@ export class FormStatusComponent implements OnInit {
   recruitName: string;
   saveStatus: string;
   currentFto: string;
+  authLevel = 0;
   currentShiftDate: string;
-  locked = false;
+  locked = false;  authSubscription: Subscription;
+  
 
-  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService, private router: Router) { }
+  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService, 
+    private router: Router, private auth: AuthorizationService) { }
 
     ngOnInit() {
       this.locked = this.dorData.formData.finalized;
@@ -32,6 +36,14 @@ export class FormStatusComponent implements OnInit {
             this.currentDorNumber = dorNumber;
             this.currentFto = this.dorData.formData.fto.DisplayName;
             this.currentShiftDate = this.dorData.formData.shiftDate.toString();
+          }
+        );
+      
+        this.authSubscription = this.auth.authorization
+        .subscribe(
+          (authLevel) => {
+            this.authLevel = authLevel;
+            console.log(this.authLevel);
           }
         );
 
@@ -62,7 +74,19 @@ export class FormStatusComponent implements OnInit {
         this.http.insertFinalized(this.dorData.getDorData())
           .subscribe(
             d => {
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/dashboard/dors']);
+            }
+          );
+      }
+    }
+
+    onReviewed() {
+      if (this.dorData.setReviewed()) {
+        this.dorData.saveTrigger.next(9);
+        this.http.insertFinalized(this.dorData.getDorData())
+          .subscribe(
+            d => {
+              this.router.navigate(['/dashboard/dors']);
             }
           );
       }

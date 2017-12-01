@@ -21,6 +21,29 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="confirmReviewed" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mark DOR as Reviewed?</h5>
+          <button type="button" class="close" data-dismiss="modal" are-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to mark this DOR as reviewed? This action cannot be undone!</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" style="cursor: pointer;" type="button" data-toggle="modal" data-target="#confirmFinalize">Cancel</button>
+          <button class="btn btn-primary"
+            type="button" style="cursor: pointer;"
+            (click)="onReviewed();" 
+            data-toggle="modal" 
+            data-target="#confirmFinalize">MARK AS REVIEWED!<span style="margin-left: 10px;" class="fa fa-check-square-o"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div class="row mt-5 pt-5">
   <div class="col-10 ">
@@ -62,13 +85,22 @@
       </div>
       <div class="col-6">
         <button
-         *ngIf="!locked;"
+         *ngIf="!locked && authLevel === 2;"
           class="btn btn-danger"
           style="cursor: pointer;"
           type="button" 
           data-toggle="modal" 
           data-target="#confirmFinalize"
           style="width: 100%">FINALIZE<span style="margin-left: 10px;" class="fa fa-exclamation"></span></button>
+
+        <button
+          *ngIf="authLevel === 3;"
+           class="btn btn-success"
+           style="cursor: pointer;"
+           type="button" 
+           data-toggle="modal" 
+           data-target="#confirmReviewed"
+           style="width: 100%">REVIEW<span style="margin-left: 10px;" class="fa fa-exclamation"></span></button>
       </div>
       <div class="row mt-4" *ngIf="locked">
         <div class="col-12 text-center">

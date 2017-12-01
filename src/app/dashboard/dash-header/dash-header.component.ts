@@ -16,4 +16,7 @@ export class DashHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  log() {
+    console.log('click');
+  }
 }

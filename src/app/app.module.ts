@@ -40,12 +40,13 @@ import { DashboardService } from './core/services/dashboard.service';
 import { DashboardDORResolver } from './core/resolvers/dashboard-dor-resolver.service';
 import { DashboardDorItemComponent } from './dashboard/dashboard-dor-item/dashboard-dor-item.component';
 import { DorResolverService } from './core/resolvers/dor-resolver.service';
-import { DorsComponent } from './dashboard/dors/dors.component';
+import { DorsComponent } from './dashboard/section/dors/dors.component';
 import { SectionComponent } from './dashboard/section/section.component';
 import { EoprsComponent } from './dashboard/section/eoprs/eoprs.component';
 import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
 import { AuthService } from './core/services/auth.service';
 import { DerpPipe } from './core/pipes/derp.pipe';
+import { ZoneComponent } from './home/zone/zone.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { DerpPipe } from './core/pipes/derp.pipe';
     EoprsComponent,
     DrjsComponent,
     DerpPipe,
+    ZoneComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,14 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark"  data-spy="affix">
-  <a class="navbar-brand" routerLink="/dashboard">Field Training Manager</a>
+  <!-- <a #navBrand class="navbar-brand" routerLink="/dashboard/dors">Field Training Manager</a> -->
+  <a #navBrand class="navbar-brand" (click)="onNavBrandClick()" style="color: white; cursor: pointer;">Field Training Manager</a>
+  
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav mr-auto" routerLinkActive="active">
     </div>
-    <div class="nav-item dropdown" routerLinkActive="active" *ngIf="authLevel < 3">
+    <div class="nav-item dropdown" routerLinkActive="active" *ngIf="authLevel < 3 && authLevel > 0">
       <a class="nav-link dropdown-toggle" 
           id="navbarDropdownMenuLink" 
           role="button"
@@ -24,6 +26,8 @@
     <span class="navbar-text" *ngIf="currentUserName">
       {{currentUserName.displayName}}
     </span>
+    <button class="btn btn-outline-success my-2 mx-2" (click)="onLogin();" *ngIf = "!hasToken">Login</button>
+    <button class="btn btn-outline-warning my-2 mx-2" (click)="onLogout()" *ngIf = "hasToken">Logout</button>
   </div>
 </nav>
 <!-- <ng-template #notAuthorized>

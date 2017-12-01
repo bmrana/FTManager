@@ -4,11 +4,12 @@ import { UsersService } from './users.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthorizationService {
   // 0 - Not Authorized, 1 - Administrator, 2 - FTO, 3 - Recruit Officer
-  authorization = new Subject<number>();
+  authorization = new BehaviorSubject<number>(0);
   duSubscription: Subscription;
   duSet = false;
   cuSubscription: Subscription;

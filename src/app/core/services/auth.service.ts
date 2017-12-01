@@ -31,7 +31,7 @@ export class AuthService {
   login() {
     hello('msft').login({ scope: Configs.scope }).then(
       () => {
-        this.zone.run(() => this.router.navigate(['home'])
+        this.zone.run(() => { this.router.navigate(['home']) }
         );
       },
       e => console.error(e.error.message)
@@ -44,4 +44,5 @@ export class AuthService {
       e => console.error(e.error.message)
     );
   }
+
 }

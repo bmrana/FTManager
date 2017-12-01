@@ -7,6 +7,8 @@ import { DomainUser } from './../data-models/domain-user.model';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 
 @Component({
@@ -15,9 +17,13 @@ import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('navBrand') navBrand: ElementRef;
+
   currentUserName: MicrosoftGraph.User;
   authLevel = 0;
   subscription: Subscription;
+  tokenSubs: Subscription;
+  hasToken = false;
   authSubscription: Subscription;
   loginFinishedSubscription: Subscription;
 
@@ -28,7 +34,7 @@ export class HeaderComponent implements OnInit {
               private auth: AuthorizationService) { }
 
   ngOnInit() {
-    // this.currentUserName = this.users.currentUser.DisplayName;
+          // this.currentUserName = this.users.currentUser.DisplayName;
     this.subscription = this.users.currentUserRetrieved
       .subscribe(
         (currentUser: MicrosoftGraph.User) => {
@@ -41,14 +47,37 @@ export class HeaderComponent implements OnInit {
           this.authLevel = authLevel;
         }
       );
+    this.tokenSubs = this.httpService.token
+      .subscribe(
+        (token) => {
+          this.hasToken = token;
+        }
+      );
     this.loginFinishedSubscription = this.auth0.loginFinished
       .subscribe(
         (f) => {
           if (f) {
-            this.router.navigate(['dashboard']);
+            // this.router.navigate(['dashboard/dors']);
+            this.onFalseClick();
           }
         }
       );
   }
 
+  onLogin() {
+    this.auth0.login();
+  }
+
+  onLogout() {
+    this.auth0.logout();
+  }
+
+  onFalseClick() {
+    let el: HTMLElement = this.navBrand.nativeElement as HTMLElement;
+    el.click();
+  }
+
+  onNavBrandClick() {
+    this.router.navigate(['/dashboard/dors']);
+  }
 }

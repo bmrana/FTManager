@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="menuDropdown">
     <ul class="nav nav-pills" id="menuDropdown">
       <li class="nav-item">
-        <a routerLink="dors" routerLinkActive="active" class="nav-link">Daily Observation Reports</a>
+        <a routerLink="dors" routerLinkActive="active" class="nav-link" (click)="log();">Daily Observation Reports</a>
       </li>
       <li class="nav-item" *ngIf="authLevel === 2">
         <a routerLink="eoprs" routerLinkActive="active" class="nav-link">End of Phase Reports</a>
