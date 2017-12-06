@@ -17,6 +17,5 @@ export class DashHeaderComponent implements OnInit {
   }
 
   log() {
-    console.log('click');
   }
 }

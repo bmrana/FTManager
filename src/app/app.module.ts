@@ -1,3 +1,4 @@
+import { EmailService } from './core/services/email.service';
 import { DorFormDataService } from './forms/dor/data/dor-form-data.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 import { DorService } from './core/services/dor.service';
@@ -103,7 +104,8 @@ import { ZoneComponent } from './home/zone/zone.component';
               DashboardDORResolver,
               DorResolverService,
               SectionComponent,
-              AuthService
+              AuthService,
+              EmailService
             ],
   bootstrap: [AppComponent]
 })

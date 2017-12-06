@@ -52,7 +52,6 @@ export class DorFormDataService {
   }
 
   setDorCategories(formData, catID) {
-    console.log(this.formData);
     const rating: CategoryRating = new CategoryRating(catID, formData.rating, formData.remedial, formData.otherComments);
     const ratingIndex = this.formData.dorRatings.indexOf(this.formData.dorRatings.find(r => r.catID === catID));
     if (ratingIndex > -1) {

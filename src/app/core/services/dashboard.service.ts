@@ -12,6 +12,5 @@ export class DashboardService {
   setDashboardDORs(dors: DashboardDOR[]) {
     this.dashboardDORs = [];
     this.dashboardDORs = dors;
-    console.log(this.dashboardDORs);
   }
 }

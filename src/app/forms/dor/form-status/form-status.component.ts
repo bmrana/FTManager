@@ -1,3 +1,4 @@
+import { EmailService } from './../../../core/services/email.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { WebConnectServiceService } from '../../../core/web-services/web-connect-service.service';
@@ -15,6 +16,7 @@ export class FormStatusComponent implements OnInit {
   dorNumberSubscription: Subscription;
   formChangedSubscription: Subscription;
   recruitNameChanged: Subscription;
+  sendMailSubscription: Subscription;
   formChanged = false;
   recruitName: string;
   saveStatus: string;
@@ -24,8 +26,8 @@ export class FormStatusComponent implements OnInit {
   locked = false;  authSubscription: Subscription;
   
 
-  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService, 
-    private router: Router, private auth: AuthorizationService) { }
+  constructor(private http: WebConnectServiceService, private dorData: DorFormDataService,
+    private router: Router, private auth: AuthorizationService, private mail: EmailService) { }
 
     ngOnInit() {
       this.locked = this.dorData.formData.finalized;
@@ -43,7 +45,6 @@ export class FormStatusComponent implements OnInit {
         .subscribe(
           (authLevel) => {
             this.authLevel = authLevel;
-            console.log(this.authLevel);
           }
         );
 
@@ -74,6 +75,10 @@ export class FormStatusComponent implements OnInit {
         this.http.insertFinalized(this.dorData.getDorData())
           .subscribe(
             d => {
+              this.sendMailSubscription =  this.mail.sendMail(
+                this.mail.constructMessage(
+                  this.dorData.formData, 'dor'))
+                    .subscribe();
               this.router.navigate(['/dashboard/dors']);
             }
           );

@@ -48,7 +48,6 @@ export class FormData {
     //             }
 
     clear() {
-        console.log(this);
         this.recruit = new AppUser('', '', '', '', '', '', null, null);
         this.fto = new AppUser('', '', '', '', '', '', null, null);
         this.phase = '';
@@ -66,7 +65,6 @@ export class FormData {
         this.dorComments = [];
         this.finalized = false;
         this.reviewed = false;
-        console.log(this);
     }
 }
 

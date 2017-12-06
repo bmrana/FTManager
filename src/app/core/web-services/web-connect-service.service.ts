@@ -153,7 +153,6 @@ export class WebConnectServiceService {
       .map(
         (currentDOR: number) => {
           this.dorFormService.updateDorNumber(currentDOR);
-          console.log('insert');
           return currentDOR;
         }
       );
@@ -168,7 +167,6 @@ export class WebConnectServiceService {
         .map(
           (dors: DashboardDOR[]) => {
             this.dashboardService.setDashboardDORs(dors);
-            console.log(dors);
             return dors;
           }
         );

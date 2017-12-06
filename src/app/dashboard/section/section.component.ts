@@ -24,7 +24,6 @@ export class SectionComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.currentSection = params['section'];
-          console.log(params['section']);
         }
       );
 
