@@ -24,7 +24,7 @@ export class AuthService {
           form: false
         },
       },
-      { redirect_uri: window.location.href }
+      { redirect_uri: window.location.origin }
     );
   }
 

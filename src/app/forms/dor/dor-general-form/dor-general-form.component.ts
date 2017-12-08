@@ -74,6 +74,9 @@ export class DorGeneralFormComponent implements OnInit {
     let backupCalls = null;
     let selfInitCalls = null;
     let arrestsMade = null;
+    let mostAcceptable = null;
+    let leastAcceptable = null;
+    let otherComments = null;
 
     const dor = this.dorData;
     recruit = dor.recruit;
@@ -86,6 +89,10 @@ export class DorGeneralFormComponent implements OnInit {
     backupCalls = dor.backupCalls;
     selfInitCalls = dor.selfInitCalls;
     arrestsMade = dor.arrestsMade;
+    mostAcceptable = dor.mostAcceptable;
+    leastAcceptable = dor.leastAcceptable;
+    otherComments = dor.otherComments;
+
     this.locked = dor.finalized;
 
     this.dorForm = new FormGroup({
@@ -99,6 +106,9 @@ export class DorGeneralFormComponent implements OnInit {
       'backupCalls': new FormControl({value: backupCalls, disabled: this.locked}, Validators.required),
       'selfInitCalls': new FormControl({value: selfInitCalls, disabled: this.locked}, Validators.required),
       'arrestsMade': new FormControl({value: arrestsMade, disabled: this.locked}, Validators.required),
+      'mostAcceptable': new FormControl({value: mostAcceptable, disabled: this.locked}, Validators.required),
+      'leastAcceptable': new FormControl({value: leastAcceptable, disabled: this.locked}, Validators.required),
+      'otherComments': new FormControl({value: otherComments, disabled: this.locked})
     });
 
   }

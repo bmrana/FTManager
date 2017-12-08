@@ -52,7 +52,7 @@ export class AuthorizationService {
   
   authorizeUser() {
     if (this.duSet === true && this.cuSet === true && this.appuSet === true) {
-      const authUser: AppUser = this.appUsers.find(u => u.EmployeeID === this.currentUser.id);
+      const authUser: AppUser = this.appUsers.find(u => u.EmployeeID === this.currentUser.id  && u.Active === true);
       this.currentAppUser = authUser;
       if (authUser) {
         switch (authUser.RoleID) {

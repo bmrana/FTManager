@@ -108,6 +108,30 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="mostAcceptable" class="col-form-label">Most Acceptable Performance of this Shift</label>
+                <textarea class="form-control" id="mostAcceptable" rows="10" formControlName="mostAcceptable"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="leastAcceptable" class="col-form-label">Least Acceptable Performance of this Shift</label>
+                <textarea class="form-control" id="leastAcceptable" rows="10" formControlName="leastAcceptable"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="otherComments" class="col-form-label">Other FTO Comments for this shift</label>
+                <textarea class="form-control" id="otherComments" rows="10" formControlName="otherComments"></textarea>
+              </div>
+            </div>
+          </div>
           <hr>
           <div class="form-group text-center">
             <button class="btn btn-success btn-info" style="cursor:pointer;" type="submit" [disabled]="!dorForm.valid">

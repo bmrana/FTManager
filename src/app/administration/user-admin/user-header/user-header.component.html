@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">User Administration</a>
+  <div class="navbar-brand" >User Administration</div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,6 +7,7 @@
     <div class="navbar-nav">
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/administration/users', {outlets: {'list': ['2'], 'person': ['none','2']}}]">Field Training Officers</a></li>
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/administration/users', {outlets: {'list': ['3'], 'person': ['none','3']}}]">Recruit Officers</a></li>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/administration/users', {outlets: {'list': ['1'], 'person': ['none','1']}}]">System Administrators</a></li>
     </div>
   </div>
 </nav>

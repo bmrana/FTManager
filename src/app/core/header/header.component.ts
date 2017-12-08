@@ -17,7 +17,7 @@ import { ElementRef } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('navBrand') navBrand: ElementRef;
+  @ViewChild('fakeNav') fakeNav: ElementRef;
 
   currentUserName: MicrosoftGraph.User;
   authLevel = 0;
@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
         (f) => {
           if (f) {
             // this.router.navigate(['dashboard/dors']);
+            this.loginFinishedSubscription.unsubscribe();
             this.onFalseClick();
           }
         }
@@ -73,11 +74,15 @@ export class HeaderComponent implements OnInit {
   }
 
   onFalseClick() {
-    let el: HTMLElement = this.navBrand.nativeElement as HTMLElement;
+    let el: HTMLElement = this.fakeNav.nativeElement as HTMLElement;
     el.click();
   }
 
   onNavBrandClick() {
     this.router.navigate(['/dashboard/dors']);
+  }
+  
+  onFakeNav() {
+    this.router.navigate([this.httpService.returnURL]);
   }
 }

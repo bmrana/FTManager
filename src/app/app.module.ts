@@ -1,3 +1,4 @@
+import { AuthGuardService } from './core/guards/auth-guard.service';
 import { EmailService } from './core/services/email.service';
 import { DorFormDataService } from './forms/dor/data/dor-form-data.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
@@ -48,6 +49,7 @@ import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
 import { AuthService } from './core/services/auth.service';
 import { DerpPipe } from './core/pipes/derp.pipe';
 import { ZoneComponent } from './home/zone/zone.component';
+import { SystemSettingsComponent } from './administration/System-settings/system-settings/system-settings.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,7 @@ import { ZoneComponent } from './home/zone/zone.component';
     DrjsComponent,
     DerpPipe,
     ZoneComponent,
+    SystemSettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,8 @@ import { ZoneComponent } from './home/zone/zone.component';
               DorResolverService,
               SectionComponent,
               AuthService,
-              EmailService
+              EmailService,
+              AuthGuardService
             ],
   bootstrap: [AppComponent]
 })

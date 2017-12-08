@@ -20,6 +20,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromPromise';
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
 import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
+import { FormLoader } from '../data-models/formLoader.model';
 
 @Injectable()
 export class WebConnectServiceService {
@@ -29,6 +30,9 @@ export class WebConnectServiceService {
   url = 'https://graph.microsoft.com';
   policeUsers: MicrosoftGraph.User[];
   token = new Subject<boolean>();
+  accessToken: string;
+  returnURL = '/dashboard/dors';
+  formToLoad: FormLoader;
 
   constructor(
     private http: HttpClient,
@@ -50,6 +54,7 @@ export class WebConnectServiceService {
     getAccessToken() {
       const msft = hello('msft').getAuthResponse();
       const accessToken = msft.access_token;
+      this.accessToken = msft.access_token;
       this.token.next(true);
       return accessToken;
     }

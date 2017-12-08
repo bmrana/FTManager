@@ -101,6 +101,8 @@ export class UserComponent implements OnInit {
       return 'FTO';
     } else if (type === 3) {
       return 'Recruit Officer';
+    } else if (type === 1) {
+      return 'System Administrator';
     } else {
       return 'Unknown';
     }

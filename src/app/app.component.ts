@@ -1,3 +1,4 @@
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { WebConnectServiceService } from './core/web-services/web-connect-service.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';

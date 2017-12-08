@@ -17,6 +17,9 @@ export class FormData {
     public backupCalls = 0;
     public selfInitCalls = 0;
     public arrestsMade = 0;
+    public mostAcceptable = '';
+    public leastAcceptable = '';
+    public otherComments = '';
     public dorRatings: CategoryRating[] = [
         new CategoryRating(0, 0, 0, '')
     ];

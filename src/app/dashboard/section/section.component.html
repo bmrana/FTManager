@@ -1,7 +1,7 @@
 <app-dors *ngIf="currentSection === 'dors'"></app-dors>
 <app-drjs *ngIf="currentSection === 'drjs'"></app-drjs>
 <app-eoprs *ngIf="currentSection === 'eoprs'"></app-eoprs>
-<a *ngIf="currentSection ==='dors'" class="btn btn-success" style=" cursor: pointer; position: fixed; bottom: 50px; right: 50px; color: white;"
+<a *ngIf="currentSection ==='dors' && (authLevel === 2)" class="btn btn-success" style=" cursor: pointer; position: fixed; bottom: 50px; right: 50px; color: white;"
   (click)="onNew(currentSection)" role="button">New DOR
   <span style="margin-left: 10px;" class="fa fa-plus-square-o"></span>
 </a>

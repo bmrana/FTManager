@@ -36,6 +36,9 @@ export class DorFormDataService {
     this.formData.selfInitCalls = formData.selfInitCalls;
     this.formData.shiftDate = formData.shiftDate;
     this.formData.shiftWorked = formData.shiftWorked;
+    this.formData.mostAcceptable = formData.mostAcceptable;
+    this.formData.leastAcceptable = formData.leastAcceptable;
+    this.formData.otherComments = formData.otherComments;
     this.formData.recruit = recruit;
     this.formData.fto = fto;
     this.formChanged.next(true);
@@ -91,6 +94,9 @@ export class DorFormDataService {
         const fto: AppUser = this.users.appUsers.find(a => a.EmployeeID === row.fto);
         this.formData.arrestsMade = row.arrestsMade;
         this.formData.backupCalls = row.backupCalls;
+        this.formData.otherComments = row.otherComments;
+        this.formData.mostAcceptable = row.mostAcceptable;
+        this.formData.leastAcceptable = row.leastAcceptable;
         this.formData.districtWorked = row.districtWorked;
         this.formData.phase = row.phase;
         this.formData.primaryCalls = row.primaryCalls;

@@ -18,12 +18,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardDOR } from './data-models/dashboard-dor.model';
 import { DashboardDORResolver } from './resolvers/dashboard-dor-resolver.service';
+import { AuthGuardService } from './guards/auth-guard.service';
+import { SystemSettingsComponent } from '../administration/System-settings/system-settings/system-settings.component';
 // import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent,  },
   { path: 'notAuthorized', component: ErrorComponent },
-  { path: 'dashboard', component: DashboardComponent, resolve: {
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], resolve: {
     dashboardDORS: DashboardDORResolver
     }, children: [
       // { path: '', redirectTo: 'dors', pathMatch: 'full'},
@@ -31,7 +33,7 @@ const appRoutes: Routes = [
       { path: ':section', component: SectionComponent }
     ]
   },
-  { path: 'dor', component: DorComponent, children: [
+  { path: 'dor', component: DorComponent, canActivate: [AuthGuardService], children: [
     { path: '', redirectTo: '/dor/0', pathMatch: 'full'},
     { path: 'dor', resolve: {
       dor: DorResolverService
@@ -40,7 +42,8 @@ const appRoutes: Routes = [
     { path: ':id', component: DorCategoryFormComponent },
   ],
   },
-  { path: 'administration/users', component: UserAdminComponent,
+  { path: 'administration/sysadmin', component: SystemSettingsComponent, canActivate: [AuthGuardService]},
+  { path: 'administration/users', component: UserAdminComponent, canActivate: [AuthGuardService],
     children: [
       { path: 'none/:type', component: UserStartComponent, outlet: 'person'},
       { path: 'post', component: UserStartComponent, outlet: 'person', resolve: {

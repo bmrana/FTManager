@@ -31,6 +31,7 @@ export class SectionComponent implements OnInit {
       .subscribe(
         (authLevel) => this.authLevel = authLevel
       );
+      
   }
 
   onNew(section: string) {
