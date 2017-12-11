@@ -23,8 +23,10 @@ export class FormStatusComponent implements OnInit {
   currentFto: string;
   authLevel = 0;
   currentShiftDate: string;
-  locked = false;  authSubscription: Subscription;
-  
+  locked = false;
+  reviewed = false;
+  authSubscription: Subscription;
+
 
   constructor(private http: WebConnectServiceService, private dorData: DorFormDataService,
     private router: Router, private auth: AuthorizationService, private mail: EmailService) { }
@@ -38,6 +40,7 @@ export class FormStatusComponent implements OnInit {
             this.currentDorNumber = dorNumber;
             this.currentFto = this.dorData.formData.fto.DisplayName;
             this.currentShiftDate = this.dorData.formData.shiftDate.toString();
+            this.reviewed = this.dorData.formData.reviewed;
           }
         );
       

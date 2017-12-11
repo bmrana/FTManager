@@ -15,7 +15,11 @@ export class RecentDorComponent implements OnInit {
 
   ngOnInit() {
     this.dors = this.DashboardService.dashboardDORs;
-    
+  }
+
+  getDOR(dorID) {
+    this.dorDataService.getDorID = dorID;
+    this.router.navigate(['/dor/dor']);
   }
 
 }

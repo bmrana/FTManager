@@ -21,8 +21,7 @@ export class DorGeneralFormComponent implements OnInit {
   currentDorNumber: number;
   locked = false;
 
-  phases: any[] = [{name: 'Phase 1', value: '1'},
-                  {name: 'Phase 2', value: '2'},
+  phases: any[] = [{name: 'Phase 2', value: '2'},
                   {name: 'Phase 3', value: '3'},
                   {name: 'Phase 4', value: '4'},
                   {name: 'Traffic', value: '10'},

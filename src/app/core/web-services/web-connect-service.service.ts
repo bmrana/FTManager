@@ -21,6 +21,8 @@ import 'rxjs/add/observable/fromPromise';
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
 import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 import { FormLoader } from '../data-models/formLoader.model';
+import { Router } from '@angular/router';
+import { ErrorComponent } from '../../home/error/error.component';
 
 @Injectable()
 export class WebConnectServiceService {
@@ -38,6 +40,8 @@ export class WebConnectServiceService {
     private http: HttpClient,
     private users: UsersService,
     private dorService: DorService,
+    private router: Router,
+    private error: ErrorComponent,
     private dorFormService: DorFormDataService,
     private dashboardService: DashboardService) {}
 
@@ -185,7 +189,31 @@ export class WebConnectServiceService {
         {params: dorParams})
         .map(
           (dor: any[]) => {
-            this.dorFormService.setDOR(dor);
+            if (dor.length > 0) {
+              this.dorFormService.setDOR(dor);
+            } else {
+              this.error.errorMessage.next('The requested document does not exist');
+              this.router.navigate(['Error']);
+            }
+            return dor;
+          }
+        );
+    }
+
+    getDoc(docType: string, docID: number, person: string) {
+      let docParams = new HttpParams();
+      docParams = docParams.append('docType', docType);
+      docParams = docParams.append('docID', docID.toString());
+      docParams = docParams.append('person', person);
+
+      return this.http.get<any[]>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/getDoc',
+        {params: docParams})
+        .map(
+          (dor: any[]) => {
+            if (dor.length > 0) {
+              this.dorFormService.setDOR(dor);
+            }
+
             return dor;
           }
         );

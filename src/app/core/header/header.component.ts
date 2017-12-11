@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { DorFormDataService } from './../../forms/dor/data/dor-form-data.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { AuthorizationService } from './../services/authorization.service';
 import { WebConnectServiceService } from './../web-services/web-connect-service.service';
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
   constructor(private users: UsersService,
               private httpService: WebConnectServiceService,
               private router: Router,
+              private dorDataService: DorFormDataService,
               private auth0: AuthService,
               private auth: AuthorizationService) { }
 
@@ -53,6 +55,7 @@ export class HeaderComponent implements OnInit {
           this.hasToken = token;
         }
       );
+    
     this.loginFinishedSubscription = this.auth0.loginFinished
       .subscribe(
         (f) => {
@@ -83,6 +86,13 @@ export class HeaderComponent implements OnInit {
   }
   
   onFakeNav() {
-    this.router.navigate([this.httpService.returnURL]);
+    if (this.auth0.formLoader) {
+      if (this.auth0.formLoader.docType === 'dor') {
+        this.dorDataService.getDorID = this.auth0.formLoader.docID;
+        this.router.navigate(['dor/get']);
+      }
+    } else {
+      this.router.navigate([this.httpService.returnURL]);
+    }
   }
 }

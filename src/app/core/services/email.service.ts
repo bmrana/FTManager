@@ -1,3 +1,5 @@
+import { CryptoService } from './crypto.service';
+
 import { FormData } from './../../forms/dor/data/dor-form-data.model';
 import { Observable } from 'rxjs/Observable';
 import { WebConnectServiceService } from './../web-services/web-connect-service.service';
@@ -8,39 +10,25 @@ import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 import { AppUser } from '../data-models/app-user.model';
 import { RecursiveTemplateAstVisitor } from '@angular/compiler';
 
+
 @Injectable()
 export class EmailService {
   message: MicrosoftGraph.Message;
   me: MicrosoftGraph.User;
-  html = `<html lang="en">
-  <head>
-    <meta charset="utf-8">
-  
-  </head>
-  <body>
-    <table>
-    <tr>
-      <td>
-        <h3>Recruit Name: </h3>
-        <h4>DOR #:</h4>
-        <p>FTO:</p>
-        <p>Shift Date:</p>
-        <p>Click here to view</p>
-      <td>
-    </tr>
-    </table>
-  </body>
-  </html>`;
 
-  constructor(private httpService: WebConnectServiceService) { }
+  constructor(private httpService: WebConnectServiceService, private cryptoService: CryptoService) { }
 
   constructMessage(dorFormData: FormData, emailType: string): MicrosoftGraph.Message {
+    const encRecruit: string = this.cryptoService.getEncString(dorFormData.recruit.EmployeeID);
+    const encDocID: string = this.cryptoService.getEncString(dorFormData.dorNumber.toString());
+    const encDocType: string = this.cryptoService.getEncString(emailType);
+
     this.message = {
       subject: dorFormData.fto.DisplayName + ' has completed a DOR for ' + dorFormData.recruit.DisplayName + '.',
       toRecipients: this.getRecipients([dorFormData.fto, dorFormData.recruit]),
       body: {
         content: `<html lang="en">
-        
+
         <head>
             <meta charset="utf-8">
             <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
@@ -48,11 +36,11 @@ export class EmailService {
                 body {
                     font-family: 'Noto Sans', sans-serif;
                 }
-        
+
                 .row {
                     margin-bottom: 30px;
                 }
-        
+
                 .container {
                     background-color: white;
                     padding: 20px;
@@ -60,12 +48,13 @@ export class EmailService {
                 }
             </style>
         </head>
-        
         <body>
             <div class="container">
             <div>
                 <h3> ` + dorFormData.recruit.DisplayName + `</h3>
-                <h4>DOR #: ` + dorFormData.dorNumber + ` </h4>
+                <h4>DOR #: ` + dorFormData.dorNumber + `
+                <a href="https://fto.dentontraining.com/?docType=` + encDocType + `&docID=` + encDocID +
+                  `&jedi=` + encRecruit + `">View this DOR</a></h4>
                 <p>FTO: ` + dorFormData.fto.DisplayName + `</p>
                 <p>Shift Date: ` + dorFormData.shiftDate + `</p>
                 <hr>
@@ -89,7 +78,6 @@ export class EmailService {
             </div>
         </div>
         </body>
-        
         </html>`,
         contentType: 'html'
       }
@@ -104,6 +92,7 @@ export class EmailService {
       recips.push({emailAddress: {name: recipient.DisplayName, address: recipient.EmailAddress}});
     }
     recips.push({emailAddress: {name: 'Willenbrock, Paul R.', address: 'paul.willenbrock@cityofdenton.com'}});
+    recips.push({emailAddress: {name: 'Rana, Brandon M.', address: 'brandon.rana@cityofdenton.com'}});
     
     return recips;
   }

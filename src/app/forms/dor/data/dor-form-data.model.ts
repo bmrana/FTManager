@@ -66,6 +66,9 @@ export class FormData {
             new CategoryRating(0, 0, 0, '')
         ];
         this.dorComments = [];
+        this.mostAcceptable = '';
+        this.leastAcceptable = '';
+        this.otherComments = '';
         this.finalized = false;
         this.reviewed = false;
     }

@@ -1,3 +1,4 @@
+import { FormLoader } from './../data-models/formLoader.model';
 import { Subject } from 'rxjs/Subject';
 import { Injectable, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,8 +9,9 @@ import { Configs } from '../configs';
 @Injectable()
 export class AuthService {
   loginFinished = new Subject<boolean>();
+  formLoader: FormLoader;
   
-  constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) { }
+  constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) {}
 
   initAuth() {
     hello.init(
@@ -18,7 +20,7 @@ export class AuthService {
           id: Configs.appId,
           oauth: {
             version: 2,
-            auth: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
+            auth: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
           },
           scope_delim: ' ',
           form: false
@@ -29,9 +31,10 @@ export class AuthService {
   }
 
   login() {
-    hello('msft').login({ scope: Configs.scope }).then(
-      () => {
-        this.zone.run(() => { this.router.navigate(['home']) }
+    hello('msft').login({ scope: Configs.scope, state: JSON.stringify(this.formLoader), display: 'page' }).then(
+      (res) => {
+        let obj = JSON.parse(res.authResponse.state);
+        this.zone.run(() => { this.router.navigate(['home']); }
         );
       },
       e => console.error(e.error.message)

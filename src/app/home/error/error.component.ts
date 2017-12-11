@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,11 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent implements OnInit {
-  errorMessage: string;
-
+  errorMessage = new BehaviorSubject<string>('An unknown error has occurred.');
+  errorSub: Subscription;
+  errorString: string;
   constructor() { }
 
   ngOnInit() {
+    this.errorSub = this.errorMessage.subscribe(
+      (message) => {
+        this.errorString = message;
+      }
+    );
   }
 
 }

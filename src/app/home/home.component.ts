@@ -10,6 +10,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/co
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+import { ErrorComponent } from './error/error.component';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUser: DomainUser;
 
   constructor(private httpService: WebConnectServiceService,
+    private error: ErrorComponent,
     private users: UsersService,
     private dorService: DorService,
     private dashboardService: DashboardService,
@@ -96,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         && this.lookupsLoaded === true) {
       if (this.authLevel === 0) {
         this.openInitModal.nativeElement.click();
-        this.router.navigate(['notAuthorized']);
+        this.router.navigate(['Error']);
       } else {
         this.openInitModal.nativeElement.click();
         // this.router.navigate(['dashboard']);

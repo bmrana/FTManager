@@ -1,3 +1,4 @@
+import { GetDocResolverService } from './resolvers/get-doc-resolver.service';
 import { SectionComponent } from './../dashboard/section/section.component';
 import { DorsComponent } from './../dashboard/section/dors/dors.component';
 import { DorResolverService } from './resolvers/dor-resolver.service';
@@ -24,7 +25,7 @@ import { SystemSettingsComponent } from '../administration/System-settings/syste
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent,  },
-  { path: 'notAuthorized', component: ErrorComponent },
+  { path: 'Error', component: ErrorComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], resolve: {
     dashboardDORS: DashboardDORResolver
     }, children: [
@@ -37,6 +38,9 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/dor/0', pathMatch: 'full'},
     { path: 'dor', resolve: {
       dor: DorResolverService
+      }, component: DorGeneralFormComponent },
+    { path: 'get', resolve: {
+      dor: GetDocResolverService
       }, component: DorGeneralFormComponent },
     { path: '0', component: DorGeneralFormComponent },
     { path: ':id', component: DorCategoryFormComponent },

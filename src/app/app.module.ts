@@ -1,3 +1,5 @@
+import { GetDocResolverService } from './core/resolvers/get-doc-resolver.service';
+import { CryptoService } from './core/services/crypto.service';
 import { AuthGuardService } from './core/guards/auth-guard.service';
 import { EmailService } from './core/services/email.service';
 import { DorFormDataService } from './forms/dor/data/dor-form-data.service';
@@ -109,7 +111,10 @@ import { SystemSettingsComponent } from './administration/System-settings/system
               SectionComponent,
               AuthService,
               EmailService,
-              AuthGuardService
+              AuthGuardService,
+              ErrorComponent,
+              CryptoService,
+              GetDocResolverService
             ],
   bootstrap: [AppComponent]
 })
