@@ -54,7 +54,7 @@ export class EmailService {
                 <h3> ` + dorFormData.recruit.DisplayName + `</h3>
                 <h4>DOR #: ` + dorFormData.dorNumber + `
                 <a href="https://fto.dentontraining.com/?docType=` + encDocType + `&docID=` + encDocID +
-                  `&jedi=` + encRecruit + `">View this DOR</a></h4>
+                  `&jedi=` + encRecruit + `">View this DOR</a><small> Right click...copy link...paste into Chrome</small></h4>
                 <p>FTO: ` + dorFormData.fto.DisplayName + `</p>
                 <p>Shift Date: ` + dorFormData.shiftDate + `</p>
                 <hr>

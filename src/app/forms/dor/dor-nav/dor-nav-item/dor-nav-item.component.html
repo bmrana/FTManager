@@ -1,1 +1,13 @@
-<a routerLink="{{category.value}}" routerLinkActive="active" class="nav-link small" (click)="navigate();">{{ category.name }}</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <a routerLink="{{category.value}}" routerLinkActive="active" class="nav-link small" (click)="navigate();">{{ category.name }}
+                <app-dor-nav-indicator style="float: right;"
+                *ngFor="let rating of ratings" [rating]="rating" [category]="category.value"></app-dor-nav-indicator>
+            </a>
+        </div>
+       
+    </div>
+</div>
+
+

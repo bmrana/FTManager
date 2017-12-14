@@ -18,6 +18,7 @@ export class DorFormDataService {
   recruitName = new BehaviorSubject<string>(null);
   saveTrigger = new Subject<number>();
   getDorID: number;
+  navIndicators = new BehaviorSubject<CategoryRating[]>(this.formData.dorRatings);
 
   constructor(private users: UsersService) {}
 
@@ -42,6 +43,7 @@ export class DorFormDataService {
     this.formData.recruit = recruit;
     this.formData.fto = fto;
     this.formChanged.next(true);
+    this.navIndicators.next(this.formData.dorRatings);
   }
 
   setFinalized(): boolean {
@@ -62,6 +64,8 @@ export class DorFormDataService {
     } else {
       this.formData.dorRatings.push(rating);
     }
+
+    this.navIndicators.next(this.formData.dorRatings);
 
     for (let comment of formData.commentsArray) {
       const newComment: CannedComment = new CannedComment(catID, comment.commentID, comment.selected);
@@ -112,6 +116,7 @@ export class DorFormDataService {
         this.currentDORNumber.next(row.dor_number);
       }
     }
+    this.navIndicators.next(this.formData.dorRatings);    
   }
 
   updateDorNumber(dorNumber: number) {

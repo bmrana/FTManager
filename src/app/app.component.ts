@@ -5,9 +5,11 @@ import { WebConnectServiceService } from './core/web-services/web-connect-servic
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import 'rxjs/add/operator/pairwise';
 import { CryptoService } from './core/services/crypto.service';
+import * as hello from 'hellojs/dist/hello.all.js';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,9 +21,11 @@ export class AppComponent implements OnInit {
 
 
   constructor(private authService: AuthService,
+              private httpService: WebConnectServiceService,
               private router: Router,
               private route: ActivatedRoute,
-              private cryptoService: CryptoService) {
+              private cryptoService: CryptoService,
+            private zone: NgZone) {
     // this.router.events.pairwise()
     //   .subscribe((event) => {
     //     console.log(event);
@@ -31,7 +35,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this.httpService.fetchAppUsers();
     // this.router.navigate(['/']);
-    this.authService.initAuth();
 
     this.route.queryParams.subscribe(
       (qsp) => {
@@ -40,9 +43,13 @@ export class AppComponent implements OnInit {
                                                         +this.cryptoService.decrypt(qsp.docID),
                                                         this.cryptoService.decrypt(qsp.jedi));
         }
+        this.authService.initAuth();
       }
     );
 
+
+    // hello.on('auth.login', this.authService.login());
+    
   }
 
 }

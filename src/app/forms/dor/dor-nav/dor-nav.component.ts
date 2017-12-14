@@ -1,6 +1,8 @@
 import { DorService } from './../../../core/services/dor.service';
 import { DORCategory } from './../../../core/data-models/dor-category.model';
 import { Component, OnInit } from '@angular/core';
+import { CategoryRating } from '../data/categoryRating.model';
+import { DorFormDataService } from '../data/dor-form-data.service';
 
 @Component({
   selector: 'app-dor-nav',
@@ -9,12 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DorNavComponent implements OnInit {
   categories: DORCategory[];
+  ratings: CategoryRating[] = [];
 
-  constructor(private dorService: DorService) {
-    this.categories = this.dorService.categories;    
+  constructor(private dorService: DorService, private dorData: DorFormDataService) {
+    this.categories = this.dorService.categories;
   }
 
   ngOnInit() {
+    this.dorData.navIndicators.subscribe(
+      (i) => {
+        this.ratings.length = 0;
+        this.ratings.push(...i);
+      }
+    );
+
     this.categories.sort( function(value1, value2) {
       if (value1.value < value2.value) {
         return -1;
@@ -26,4 +36,5 @@ export class DorNavComponent implements OnInit {
     });
   }
 
+  
 }

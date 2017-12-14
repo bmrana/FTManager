@@ -52,6 +52,7 @@ import { AuthService } from './core/services/auth.service';
 import { DerpPipe } from './core/pipes/derp.pipe';
 import { ZoneComponent } from './home/zone/zone.component';
 import { SystemSettingsComponent } from './administration/System-settings/system-settings/system-settings.component';
+import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-indicator/dor-nav-indicator.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { SystemSettingsComponent } from './administration/System-settings/system
     DerpPipe,
     ZoneComponent,
     SystemSettingsComponent,
+    DorNavIndicatorComponent,
   ],
   imports: [
     BrowserModule,
