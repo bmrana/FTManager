@@ -89,6 +89,7 @@ export class HeaderComponent implements OnInit {
     if (this.auth0.formLoader) {
       if (this.auth0.formLoader.docType === 'dor') {
         this.dorDataService.getDorID = this.auth0.formLoader.docID;
+        this.auth0.formLoader = null;
         this.router.navigate(['dor/get']);
       }
     } else {

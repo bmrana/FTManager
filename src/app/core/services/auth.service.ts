@@ -34,12 +34,12 @@ export class AuthService {
   login() {
     hello('msft').login({ scope: Configs.scope,
                           state: JSON.stringify(this.formLoader),
-                          // display: 'page',
+                          display: 'page',
                           force: false
                          }).then(
       (res) => {
         console.log(res);
-        this.zone.run(() => { this.router.navigate(['home']); }
+        this.zone.run(() => { console.log('here'); this.router.navigate(['home']); }
         );
       },
       e => console.error(e.error.message)

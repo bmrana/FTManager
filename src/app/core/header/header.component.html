@@ -26,7 +26,7 @@
     <span class="navbar-text" *ngIf="currentUserName">
       {{currentUserName.displayName}}
     </span>
-    <button class="btn btn-outline-success my-2 mx-2" (click)="onLogin();" *ngIf="!hasToken">Login</button>
+    <!-- <button class="btn btn-outline-success my-2 mx-2" (click)="onLogin();" *ngIf="!hasToken">Login</button> -->
     <button class="btn btn-outline-warning my-2 mx-2" (click)="onLogout()" *ngIf="hasToken">Logout</button>
     <button #fakeNav (click)="onFakeNav()" style="display:none;"></button>
   </div>

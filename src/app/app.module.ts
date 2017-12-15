@@ -1,3 +1,4 @@
+import { AuthGuardDORService } from './core/guards/auth-guard-dor.service';
 import { GetDocResolverService } from './core/resolvers/get-doc-resolver.service';
 import { CryptoService } from './core/services/crypto.service';
 import { AuthGuardService } from './core/guards/auth-guard.service';
@@ -53,6 +54,7 @@ import { DerpPipe } from './core/pipes/derp.pipe';
 import { ZoneComponent } from './home/zone/zone.component';
 import { SystemSettingsComponent } from './administration/System-settings/system-settings/system-settings.component';
 import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-indicator/dor-nav-indicator.component';
+import { LoginComponent } from './home/login/login.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-n
     ZoneComponent,
     SystemSettingsComponent,
     DorNavIndicatorComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +117,7 @@ import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-n
               AuthService,
               EmailService,
               AuthGuardService,
+              AuthGuardDORService,
               ErrorComponent,
               CryptoService,
               GetDocResolverService

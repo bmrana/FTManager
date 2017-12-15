@@ -36,20 +36,7 @@ export class AppComponent implements OnInit {
     // this.httpService.fetchAppUsers();
     // this.router.navigate(['/']);
 
-    this.route.queryParams.subscribe(
-      (qsp) => {
-        if (qsp.docID && qsp.docType && qsp.jedi) {
-          this.authService.formLoader = new FormLoader(this.cryptoService.decrypt(qsp.docType),
-                                                        +this.cryptoService.decrypt(qsp.docID),
-                                                        this.cryptoService.decrypt(qsp.jedi));
-        }
-        this.authService.initAuth();
-      }
-    );
-
-
-    // hello.on('auth.login', this.authService.login());
-    
+    this.authService.initAuth();
   }
 
 }

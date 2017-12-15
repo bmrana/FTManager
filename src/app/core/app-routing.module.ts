@@ -21,10 +21,14 @@ import { DashboardDOR } from './data-models/dashboard-dor.model';
 import { DashboardDORResolver } from './resolvers/dashboard-dor-resolver.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { SystemSettingsComponent } from '../administration/System-settings/system-settings/system-settings.component';
+import { LoginComponent } from '../home/login/login.component';
+import { AuthGuardDORService } from './guards/auth-guard-dor.service';
 // import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent,  },
+  { path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component: LoginComponent },
   { path: 'Error', component: ErrorComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], resolve: {
     dashboardDORS: DashboardDORResolver
@@ -41,7 +45,7 @@ const appRoutes: Routes = [
       }, component: DorGeneralFormComponent },
     { path: 'get', resolve: {
       dor: GetDocResolverService
-      }, component: DorGeneralFormComponent },
+      }, component: DorGeneralFormComponent , canActivate: [AuthGuardService]},
     { path: '0', component: DorGeneralFormComponent },
     { path: ':id', component: DorCategoryFormComponent },
   ],
