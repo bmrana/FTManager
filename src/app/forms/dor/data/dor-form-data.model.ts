@@ -72,11 +72,7 @@ export class FormData {
         this.finalized = false;
         this.reviewed = false;
 
-        // Default ratings for each category
-        for (let i = 1; i < 27; i++) {
-            const catRating: CategoryRating = new CategoryRating(i, 99, 0, '');
-            this.dorRatings.push(catRating);
-        }
+        
     }
 }
 

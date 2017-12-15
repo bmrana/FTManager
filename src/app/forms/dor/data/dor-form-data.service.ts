@@ -116,7 +116,7 @@ export class DorFormDataService {
         this.currentDORNumber.next(row.dor_number);
       }
     }
-    this.navIndicators.next(this.formData.dorRatings);    
+    this.navIndicators.next(this.formData.dorRatings);
     localStorage.setItem('getDOR', 'false');
   }
 
@@ -130,6 +130,14 @@ export class DorFormDataService {
     this.formData.clear();
     this.currentDORNumber.next(null);
     this.recruitName.next('');
+
+    // Default ratings for each category
+    for (let i = 1; i < 27; i++) {
+      const catRating: CategoryRating = new CategoryRating(i, 99, 0, '');
+      this.formData.dorRatings.push(catRating);
+  }
+  this.navIndicators.next(this.formData.dorRatings);
+  
     return this.formData;
   }
 

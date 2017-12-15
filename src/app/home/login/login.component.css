@@ -1,0 +1,26 @@
+img.bg {
+    min-height: 100%;
+    min-width: 1369px;
+
+    width: 100%;
+    height: auto;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+@media screen and (max-width: 1369px) {
+    img.bg {
+        left: 50%;
+        margin-left: -684px;
+    }
+}
+
+.btn {
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
