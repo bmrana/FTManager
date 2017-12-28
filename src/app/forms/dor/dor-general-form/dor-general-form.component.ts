@@ -53,7 +53,6 @@ export class DorGeneralFormComponent implements OnInit {
     );
 
     this.dorData = this.dorDataService.getDorData();
-
     this.initForm();
   }
 
@@ -78,6 +77,7 @@ export class DorGeneralFormComponent implements OnInit {
     let otherComments = null;
 
     const dor = this.dorData;
+    console.log(this.dorData);
     recruit = dor.recruit;
     fto = dor.fto;
     phase = dor.phase;
@@ -109,17 +109,19 @@ export class DorGeneralFormComponent implements OnInit {
       'leastAcceptable': new FormControl({value: leastAcceptable, disabled: this.locked}, Validators.required),
       'otherComments': new FormControl({value: otherComments, disabled: this.locked})
     });
-
+    console.log(this.dorForm);
+    console.log(this.dorForm.getRawValue());
   }
   save(): boolean {
     if (!this.dorForm.valid) {
       return false;
     }
-    this.dorDataService.setDorData(this.dorForm.value);
+    this.dorDataService.setDorData(this.dorForm.getRawValue());
     return true;
   }
 
   goToNext() {
+    console.log(this.dorForm.value);
     if (this.save()) {
       this.router.navigate(['../1'], {relativeTo: this.route});
     }

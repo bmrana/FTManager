@@ -23,12 +23,15 @@ export class AuthGuardService implements CanActivate {
     const expectedRole = route.data.expectedRole;
     const qsp = route.queryParams;
     if (qsp.docID && qsp.docType && qsp.jedi) {
-      this.auth.formLoader = new FormLoader(this.cryptoService.decrypt(qsp.docType),
-        +this.cryptoService.decrypt(qsp.docID),
-        this.cryptoService.decrypt(qsp.jedi));
-      localStorage.setItem('getDOR', 'true');
+      sessionStorage.setItem(
+        'ftm_formLoader', '{\"docID\":\"' + qsp.docID + '\",\"docType\":\"' + qsp.docType + '\",\"jedi\":\"' + qsp.jedi + '\"}');
+      // this.auth.formLoader = new FormLoader(this.cryptoService.decrypt(qsp.docType),
+      //   +this.cryptoService.decrypt(qsp.docID),
+      //   this.cryptoService.decrypt(qsp.jedi));
+      // localStorage.setItem('getDOR', 'true');
+      // localStorage.setItem('docType', this.auth.formLoader.docType);
     }
-
+    
     // Determine if current session has expired
     const online = function (session) {
       const currentTime = (new Date()).getTime() / 1000;
@@ -42,15 +45,15 @@ export class AuthGuardService implements CanActivate {
       this.router.navigate(['login']);
       return false;
     }
-    const getDOR = localStorage.getItem('getDOR');
-    if (!this.auth.formLoader && getDOR && getDOR === 'true') {
-      const msftState = JSON.parse(msft.state);
-      if (msftState.docType && msftState.docID && msftState.recruitID) {
-        const fl: FormLoader = new FormLoader(msftState.docType, msftState.docID, msftState.recruitID);
-        this.auth.formLoader = new FormLoader(msftState.docType,
-          msftState.docID, msftState.recruitID);
-      }
-    }
+    // const getDOR = localStorage.getItem('getDOR');
+    // if (!this.auth.formLoader && getDOR && getDOR === 'true') {
+    //   const msftState = JSON.parse(msft.state);
+    //   if (msftState.docType && msftState.docID && msftState.recruitID) {
+    //     const fl: FormLoader = new FormLoader(msftState.docType, msftState.docID, msftState.recruitID);
+    //     this.auth.formLoader = new FormLoader(msftState.docType,
+    //       msftState.docID, msftState.recruitID);
+    //   }
+    // }
 
     return true;
   }

@@ -1,3 +1,6 @@
-<div *ngIf="rating.catID === category && rating.rating === 99">
+<div *ngIf="rating.catID === category && rating.rating === 99 else lowRating">
   <span class="fa fa-eye-slash fa-2" aria-hidden="true"></span>
+</div>
+<div #lowRating *ngIf="rating.catID === category && rating.catID !== 0 && rating.rating < 4">
+  <span class="fa fa-circle-o" aria-hidden="true" style="color: orange;"></span>
 </div>

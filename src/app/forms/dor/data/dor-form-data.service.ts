@@ -117,7 +117,7 @@ export class DorFormDataService {
       }
     }
     this.navIndicators.next(this.formData.dorRatings);
-    localStorage.setItem('getDOR', 'false');
+    sessionStorage.removeItem('ftm_formLoader');
   }
 
   updateDorNumber(dorNumber: number) {

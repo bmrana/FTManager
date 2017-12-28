@@ -35,6 +35,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this.httpService.fetchAppUsers();
     // this.router.navigate(['/']);
+    // clean localStorage
+    // if (localStorage.getItem('ftm_formLoader')) { localStorage.removeItem('ftm_formLoader'); }
 
     this.authService.initAuth();
   }

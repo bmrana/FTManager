@@ -60,7 +60,7 @@
         </div>
         <div *ngIf="currentDorNumber">
             <div class="form-group text-center">
-                <button class="btn btn-success btn-info" style="cursor:pointer;" type="submit" [disabled]="!dorForm.valid">
+                <button class="btn btn-success btn-info" style="cursor:pointer;" type="button" (click)="goToNext()" [disabled]="!dorForm.valid">
                   Next
                   <span style="margin-left: 10px;" class="fa fa-arrow-right"></span>
                 </button>
@@ -140,7 +140,7 @@
           </div>
           <hr>
           <div class="form-group text-center">
-            <button class="btn btn-success btn-info" style="cursor:pointer;" type="submit" [disabled]="!dorForm.valid">
+            <button class="btn btn-success btn-info" style="cursor:pointer;" type="button" [disabled]="!dorForm.valid" (click)='goToNext()'>
               Next
               <span style="margin-left: 10px;" class="fa fa-arrow-right"></span>
             </button>
