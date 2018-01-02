@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col">
         <h2 class="text-center">Unreviewed DORs</h2>
-        <div *ngFor="let dor of dors | userListFilter : 'unreviewed' : 'status'; let i = index">
+        <div *ngFor="let dor of dors | userListFilter : 'unreviewed' : 'status' let i = index">
           <a class="nav-link" (click)= "getDOR(dor.id)" style="cursor: pointer;">
             <app-dashboard-dor-item [dor]="dor"></app-dashboard-dor-item>
           </a>

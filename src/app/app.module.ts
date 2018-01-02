@@ -1,3 +1,4 @@
+import { GroupByPipe } from './core/pipes/groupBy.pipe';
 import { AuthGuardDORService } from './core/guards/auth-guard-dor.service';
 import { GetDocResolverService } from './core/resolvers/get-doc-resolver.service';
 import { CryptoService } from './core/services/crypto.service';
@@ -55,6 +56,7 @@ import { ZoneComponent } from './home/zone/zone.component';
 import { SystemSettingsComponent } from './administration/System-settings/system-settings/system-settings.component';
 import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-indicator/dor-nav-indicator.component';
 import { LoginComponent } from './home/login/login.component';
+import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-chart/single-recruit-chart.component';
 
 @NgModule({
   declarations: [
@@ -88,10 +90,12 @@ import { LoginComponent } from './home/login/login.component';
     EoprsComponent,
     DrjsComponent,
     DerpPipe,
+    GroupByPipe,
     ZoneComponent,
     SystemSettingsComponent,
     DorNavIndicatorComponent,
     LoginComponent,
+    SingleRecruitChartComponent,
   ],
   imports: [
     BrowserModule,
