@@ -24,6 +24,7 @@ export class DorGeneralFormComponent implements OnInit {
   phases: any[] = [{name: 'Phase 2', value: '2'},
                   {name: 'Phase 3', value: '3'},
                   {name: 'Phase 4', value: '4'},
+                  {name: 'Ghost', value: '5'},
                   {name: 'Traffic', value: '10'},
                   {name: 'Remedial', value: '0'}];
 
@@ -77,7 +78,6 @@ export class DorGeneralFormComponent implements OnInit {
     let otherComments = null;
 
     const dor = this.dorData;
-    console.log(this.dorData);
     recruit = dor.recruit;
     fto = dor.fto;
     phase = dor.phase;
@@ -109,8 +109,6 @@ export class DorGeneralFormComponent implements OnInit {
       'leastAcceptable': new FormControl({value: leastAcceptable, disabled: this.locked}, Validators.required),
       'otherComments': new FormControl({value: otherComments, disabled: this.locked})
     });
-    console.log(this.dorForm);
-    console.log(this.dorForm.getRawValue());
   }
   save(): boolean {
     if (!this.dorForm.valid) {
@@ -121,7 +119,6 @@ export class DorGeneralFormComponent implements OnInit {
   }
 
   goToNext() {
-    console.log(this.dorForm.value);
     if (this.save()) {
       this.router.navigate(['../1'], {relativeTo: this.route});
     }
