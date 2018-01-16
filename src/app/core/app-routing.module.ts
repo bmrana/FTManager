@@ -1,3 +1,4 @@
+import { ContainerComponent } from './../reporting/container/container.component';
 import { GetDocResolverService } from './resolvers/get-doc-resolver.service';
 import { SectionComponent } from './../dashboard/section/section.component';
 import { DorsComponent } from './../dashboard/section/dors/dors.component';
@@ -23,6 +24,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { SystemSettingsComponent } from '../administration/System-settings/system-settings/system-settings.component';
 import { LoginComponent } from '../home/login/login.component';
 import { AuthGuardDORService } from './guards/auth-guard-dor.service';
+import { SingleRecruitChartComponent } from '../reporting/charts/single-recruit-chart/single-recruit-chart.component';
 // import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
@@ -51,6 +53,7 @@ const appRoutes: Routes = [
   ],
   },
   { path: 'administration/sysadmin', component: SystemSettingsComponent, canActivate: [AuthGuardService]},
+  { path: 'administration/reporting', component: ContainerComponent, canActivate: [AuthGuardService]},
   { path: 'administration/users', component: UserAdminComponent, canActivate: [AuthGuardService],
     children: [
       { path: 'none/:type', component: UserStartComponent, outlet: 'person'},

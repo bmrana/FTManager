@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DashboardDOR } from '../../core/data-models/dashboard-dor.model';
+import { PrettyDatePipe } from '../../core/pipes/pretty-date.pipe';
 
 @Component({
   selector: 'app-dashboard-dor-item',
@@ -9,10 +10,10 @@ import { DashboardDOR } from '../../core/data-models/dashboard-dor.model';
 export class DashboardDorItemComponent implements OnInit {
   @Input() dor: DashboardDOR;
   prettyDate: Date;
-  constructor() { }
+  constructor(private prettyDatePipe: PrettyDatePipe) { }
 
   ngOnInit() {
-    this.prettyDate = new Date(+((this.dor.shiftDate.toString()).substr(6, 13)));
+    this.prettyDate = this.prettyDatePipe.transform(this.dor.shiftDate);
   }
 
 }

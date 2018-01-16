@@ -23,6 +23,7 @@ import * as MicrosoftGraphClient from '@microsoft/microsoft-graph-client';
 import { FormLoader } from '../data-models/formLoader.model';
 import { Router } from '@angular/router';
 import { ErrorComponent } from '../../home/error/error.component';
+import { ReportingService } from '../../reporting/reporting.service';
 
 @Injectable()
 export class WebConnectServiceService {
@@ -43,7 +44,8 @@ export class WebConnectServiceService {
     private router: Router,
     private error: ErrorComponent,
     private dorFormService: DorFormDataService,
-    private dashboardService: DashboardService) {}
+    private dashboardService: DashboardService,
+    private reportinService: ReportingService) {}
 
     // fetchAllUsers() {
     //   return this.http.get<DomainUser[]>('http://localhost:62675/ADService.svc/getUsers')
@@ -217,6 +219,20 @@ export class WebConnectServiceService {
             return dor;
           }
         );
+    }
+
+    getSingleRecruitRatings(recruitID: string) {
+      let recruit = new HttpParams();
+      recruit = recruit.append('recruitID', recruitID);
+      return this.http.get<any[]>(this.serviceURL + 'FieldTraining/Reporting/reportingService.svc/getSingleRecruitRatings',
+      {params: recruit})
+      .subscribe(
+        (ratings: any[]) => {
+          if (ratings.length > 0) {
+            this.reportinService.setSingleUserRatings(ratings);
+          }
+        }
+      );
     }
 
   }

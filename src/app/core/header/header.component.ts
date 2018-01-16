@@ -99,7 +99,6 @@ export class HeaderComponent implements OnInit {
     // }
     if (sessionStorage.getItem('ftm_formLoader')) {
       const formLoader = JSON.parse(sessionStorage.getItem('ftm_formLoader'));
-      console.log(formLoader);
       if (this.cryptoService.decrypt(formLoader.docType) === 'dor') {
         this.dorDataService.getDorID = +this.cryptoService.decrypt(formLoader.docID);
         this.router.navigate(['dor/get']);

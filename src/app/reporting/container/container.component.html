@@ -1,0 +1,10 @@
+<div class="row sticky">
+  <div class="col-lg-2">
+    <app-selector></app-selector>
+  </div>
+  <div class="col-lg-10">
+    <div *ngFor="let phase of phases">
+    <app-single-recruit-chart [phase]=phase></app-single-recruit-chart>
+  </div>
+  </div>
+</div>

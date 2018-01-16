@@ -1,3 +1,4 @@
+import { SortArrayPipe } from './../../../core/pipes/sort-array.pipe';
 import { AppUser } from './../../../core/data-models/app-user.model';
 import { UsersService } from './../../../core/services/users.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -16,40 +17,25 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private usersService: UsersService) { }
+              private usersService: UsersService,
+              private sortPipe: SortArrayPipe) { }
 
   ngOnInit() {
     this.appUsers = this.usersService.appUsers;
-    this.appUsers.sort( function(name1, name2) {
-      if (name1.DisplayName < name2.DisplayName) {
-        return -1;
-      } else if (name1.DisplayName > name2.DisplayName) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    this.subscription = this.usersService.appUsersChanged
-      .subscribe(
-        (appUsers: AppUser[]) => {
-          this.appUsers = appUsers;
-          this.appUsers.sort( function(name1, name2) {
-            if (name1.DisplayName < name2.DisplayName) {
-              return -1;
-            } else if (name1.DisplayName > name2.DisplayName) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-        }
-      );
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.listId = +params['type'];
-        }
-      );
+    this.appUsers = this.sortPipe.transform(this.appUsers, 'DisplayName');
+      this.subscription = this.usersService.appUsersChanged
+        .subscribe(
+          (appUsers: AppUser[]) => {
+            this.appUsers = appUsers;
+            this.appUsers = this.sortPipe.transform(this.appUsers, 'DisplayName');
+          }
+        );
+      this.route.params
+        .subscribe(
+          (params: Params) => {
+            this.listId = +params['type'];
+          }
+        );
   }
 
   ngOnDestroy() {

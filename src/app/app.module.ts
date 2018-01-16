@@ -1,4 +1,3 @@
-import { GroupByPipe } from './core/pipes/groupBy.pipe';
 import { AuthGuardDORService } from './core/guards/auth-guard-dor.service';
 import { GetDocResolverService } from './core/resolvers/get-doc-resolver.service';
 import { CryptoService } from './core/services/crypto.service';
@@ -34,7 +33,6 @@ import { DashHeaderComponent } from './dashboard/dash-header/dash-header.compone
 import { DorComponent } from './forms/dor/dor.component';
 import { DorNavComponent } from './forms/dor/dor-nav/dor-nav.component';
 import { DorNavItemComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-item.component';
-import { DorCategoryFilterPipe } from './core/pipes/dor-category-filter.pipe';
 import { CommentItemComponent } from './forms/dor/comment-item/comment-item.component';
 import { DorCategoryFormComponent } from './forms/dor/dor-category-form/dor-category-form.component';
 import { DorGeneralFormComponent } from './forms/dor/dor-general-form/dor-general-form.component';
@@ -57,6 +55,13 @@ import { SystemSettingsComponent } from './administration/System-settings/system
 import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-indicator/dor-nav-indicator.component';
 import { LoginComponent } from './home/login/login.component';
 import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-chart/single-recruit-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ReportingService } from './reporting/reporting.service';
+import { BuildMultiPipe } from './core/pipes/build-multi.pipe';
+import { SortArrayPipe } from './core/pipes/sort-array.pipe';
+import { PrettyDatePipe } from './core/pipes/pretty-date.pipe';
+import { SelectorComponent } from './reporting/selector/selector.component';
+import { ContainerComponent } from './reporting/container/container.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +81,6 @@ import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-c
     DorComponent,
     DorNavComponent,
     DorNavItemComponent,
-    DorCategoryFilterPipe,
     CommentItemComponent,
     DorCategoryFormComponent,
     DorGeneralFormComponent,
@@ -90,12 +94,16 @@ import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-c
     EoprsComponent,
     DrjsComponent,
     DerpPipe,
-    GroupByPipe,
     ZoneComponent,
     SystemSettingsComponent,
     DorNavIndicatorComponent,
     LoginComponent,
     SingleRecruitChartComponent,
+    BuildMultiPipe,
+    SortArrayPipe,
+    PrettyDatePipe,
+    SelectorComponent,
+    ContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +112,8 @@ import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-c
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    NgxChartsModule
   ],
   providers: [ WebConnectServiceService,
               UsersService,
@@ -114,6 +123,7 @@ import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-c
               AuthorizationService,
               DeleteUserResolverService,
               DorCategoryFormComponent,
+              PrettyDatePipe,
               DashboardService,
               DashboardDORResolver,
               DorResolverService,
@@ -124,7 +134,10 @@ import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-c
               AuthGuardDORService,
               ErrorComponent,
               CryptoService,
-              GetDocResolverService
+              BuildMultiPipe,
+              GetDocResolverService,
+              ReportingService,
+              SortArrayPipe
             ],
   bootstrap: [AppComponent]
 })

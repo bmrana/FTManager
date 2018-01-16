@@ -1,4 +1,3 @@
-import { DorCategoryFilterPipe } from './core/pipes/dor-category-filter.pipe';
 import { FormLoader } from './core/data-models/formLoader.model';
 import { ActivatedRoute } from '@angular/router';
 import { WebConnectServiceService } from './core/web-services/web-connect-service.service';

@@ -1,0 +1,68 @@
+<div class="container ml-3">
+  <div class="row bg-light mb-3 mt-3">
+    <div class="col-12 boxed-group border rounded border-secondary">
+      <div class="h5 mt-2">Recruit Selection</div>
+      <div class="form-group">
+        <div class="input-group input-group-sm">
+          <select class="form-control" name="selectRecruit" id="selectRecruit" #selectRecruit>
+            <option selected>Choose...</option>
+            <option *ngFor="let user of appUsers | userListFilter : 3 : 'RoleID'; let i = index" [value]=user.EmployeeID>
+              {{user.DisplayName}}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="onNewRecruit(selectRecruit.value)">Load Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row bg-light mb-3">
+    <div class="col-12 boxed-group border rounded border-secondary">
+      <div class="h5 mt-2">Phase Selection</div>
+      <div class="form-group">
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">
+            <input type="checkbox" (change)="onPhaseSelected(2, $event.target.checked)">
+          </span>
+          <label class="form-control">Phase 2</label>
+        </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">
+            <input type="checkbox" (change)="onPhaseSelected(3, $event.target.checked)">
+          </span>
+          <label class="form-control">Phase 3</label>
+        </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">
+            <input type="checkbox" (change)="onPhaseSelected(4, $event.target.checked)">
+          </span>
+          <label class="form-control">Phase 4</label>
+        </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">
+            <input type="checkbox" (change)="onPhaseSelected(10, $event.target.checked)">
+          </span>
+          <label class="form-control">Traffic</label>
+        </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">
+            <input type="checkbox" (change)="onPhaseSelected(0, $event.target.checked)">
+          </span>
+          <label class="form-control">Remedial</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row bg-light">
+    <div class="col-12 boxed-group border rounded border-secondary">
+      <div class="h5 mt-2">Category Selections</div>
+      <div class="input-group input-group-sm" *ngFor="let category of allCategories">
+        <span class="input-group-addon">
+          <input type="checkbox" (change)="onCategorySelected(category.value, $event.target.checked)">
+        </span>
+        <label class="form-control">{{category.name}}</label>
+      </div>
+    </div>
+  </div>
+</div>

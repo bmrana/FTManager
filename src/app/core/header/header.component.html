@@ -11,6 +11,9 @@
     <div class="navbar-nav mr-auto">
     </div>
     <div class="nav-item" routerLinkActive="active" *ngIf="authLevel === 1">
+        <a class="nav-link"[routerLink]="['/administration/reporting']" style="color: white;">Reporting</a>        
+    </div>
+    <div class="nav-item" routerLinkActive="active" *ngIf="authLevel === 1">
         <a class="nav-link"[routerLink]="['/administration/sysadmin']" style="color: white;">System Settings</a>        
     </div>
     <div class="nav-item dropdown" routerLinkActive="active" *ngIf="authLevel === 1">
