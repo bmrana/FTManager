@@ -4,7 +4,6 @@ import { CryptoService } from './core/services/crypto.service';
 import { AuthGuardService } from './core/guards/auth-guard.service';
 import { EmailService } from './core/services/email.service';
 import { DorFormDataService } from './forms/dor/data/dor-form-data.service';
-import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 import { DorService } from './core/services/dor.service';
 import { DeleteUserResolverService } from './core/resolvers/delete-user-resolver.service';
 import { AuthorizationService } from './core/services/authorization.service';
@@ -112,7 +111,6 @@ import { ContainerComponent } from './reporting/container/container.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    AngularFontAwesomeModule,
     NgxChartsModule
   ],
   providers: [ WebConnectServiceService,

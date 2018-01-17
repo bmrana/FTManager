@@ -4,15 +4,15 @@
       <div class="h5 mt-2">Recruit Selection</div>
       <div class="form-group">
         <div class="input-group input-group-sm">
-          <select class="form-control" name="selectRecruit" id="selectRecruit" #selectRecruit>
+          <select class="form-control" name="selectRecruit" id="selectRecruit" #selectRecruit (change)="onNewRecruit($event.target.value)">
             <option selected>Choose...</option>
-            <option *ngFor="let user of appUsers | userListFilter : 3 : 'RoleID'; let i = index" [value]=user.EmployeeID>
+            <option 
+              *ngFor="let user of appUsers | userListFilter : 3 : 'RoleID' | userListFilter : true : 'Active'; let i = index" 
+              [value]=user.EmployeeID
+              [selected]="user.EmployeeID == selectedRecruit">
               {{user.DisplayName}}
             </option>
           </select>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="onNewRecruit(selectRecruit.value)">Load Data</button>
-          </div>
         </div>
       </div>
     </div>
@@ -22,44 +22,67 @@
       <div class="h5 mt-2">Phase Selection</div>
       <div class="form-group">
         <div class="input-group input-group-sm">
-          <span class="input-group-addon">
-            <input type="checkbox" (change)="onPhaseSelected(2, $event.target.checked)">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" [checked]="getCheckedPhases(2)" (change)="onPhaseSelected(2, $event.target.checked)">
+            </div>
           </span>
           <label class="form-control">Phase 2</label>
         </div>
         <div class="input-group input-group-sm">
-          <span class="input-group-addon">
-            <input type="checkbox" (change)="onPhaseSelected(3, $event.target.checked)">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" [checked]="getCheckedPhases(3)" (change)="onPhaseSelected(3, $event.target.checked)">
+            </div>
           </span>
           <label class="form-control">Phase 3</label>
         </div>
         <div class="input-group input-group-sm">
-          <span class="input-group-addon">
-            <input type="checkbox" (change)="onPhaseSelected(4, $event.target.checked)">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" [checked]="getCheckedPhases(4)" (change)="onPhaseSelected(4, $event.target.checked)">
+            </div>
           </span>
           <label class="form-control">Phase 4</label>
         </div>
         <div class="input-group input-group-sm">
-          <span class="input-group-addon">
-            <input type="checkbox" (change)="onPhaseSelected(10, $event.target.checked)">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" [checked]="getCheckedPhases(10)" (change)="onPhaseSelected(10, $event.target.checked)">
+
+            </div>
           </span>
           <label class="form-control">Traffic</label>
         </div>
         <div class="input-group input-group-sm">
-          <span class="input-group-addon">
-            <input type="checkbox" (change)="onPhaseSelected(0, $event.target.checked)">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" [checked]="getCheckedPhases(0)" (change)="onPhaseSelected(0, $event.target.checked)">
+
+            </div>
           </span>
           <label class="form-control">Remedial</label>
         </div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-prepend">
+              <div class="input-group-text">
+                  <input type="checkbox" [checked]="getCheckedPhases(5)" (change)="onPhaseSelected(5, $event.target.checked)">
+              </div>
+            </span>
+            <label class="form-control">Ghost</label>
+          </div>
       </div>
     </div>
   </div>
   <div class="row bg-light">
     <div class="col-12 boxed-group border rounded border-secondary">
       <div class="h5 mt-2">Category Selections</div>
+      <button class="btn btn-outline-secondary btn-sm mb-2" (click)="onClearSelections()">Clear Selections</button>
       <div class="input-group input-group-sm" *ngFor="let category of allCategories">
-        <span class="input-group-addon">
-          <input type="checkbox" (change)="onCategorySelected(category.value, $event.target.checked)">
+        <span class="input-group-prepend">
+          <div class="input-group-text" style="height: 100%;">
+              <input type="checkbox" [checked]="getCheckedCategories(category.value)" (change)="onCategorySelected(category.value, $event.target.checked)">
+          </div>
         </span>
         <label class="form-control">{{category.name}}</label>
       </div>

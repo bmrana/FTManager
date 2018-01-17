@@ -1,3 +1,4 @@
+import { SortArrayPipe } from './../../core/pipes/sort-array.pipe';
 import { WebConnectServiceService } from './../../core/web-services/web-connect-service.service';
 import { UsersService } from './../../core/services/users.service';
 import { DORCategory } from './../../core/data-models/dor-category.model';
@@ -17,14 +18,18 @@ export class SelectorComponent implements OnInit {
   allCategories: DORCategory[] = [];
   selectedCategories: any[] = [];
   selectedPhases: any[] = [];
+  selectedRecruit = '';
   appUsers: AppUser[] = [];
+  categorySubsription: Subscription;
 
   constructor(private reportingService: ReportingService,
     private dorService: DorService,
     private usersService: UsersService,
-    private http: WebConnectServiceService) { }
+    private http: WebConnectServiceService,
+    private sortPipe: SortArrayPipe) { }
 
   onNewRecruit(recruitID) {
+    this.reportingService.reportingRecruit = recruitID;
     this.http.getSingleRecruitRatings(recruitID);
   }
 
@@ -51,9 +56,29 @@ export class SelectorComponent implements OnInit {
 
     this.reportingService.reportingCategories.next(this.selectedCategories);
   }
+
+  onClearSelections() {
+    this.selectedCategories.length = 0;
+    this.reportingService.reportingCategories.next(this.selectedCategories);
+  }
+
+  getCheckedCategories(category): boolean {
+    return this.selectedCategories.indexOf(category) > -1;
+  }
+
+  getCheckedPhases(value): boolean {
+    return this.selectedPhases.indexOf(value) > -1;
+  }
+
   ngOnInit() {
     this.appUsers.push(...this.usersService.appUsers.slice());
+    this.appUsers = this.sortPipe.transform(this.appUsers, 'DisplayName');
     this.allCategories.push(...this.dorService.categories);
+
+
+    this.selectedCategories = this.reportingService.reportingCategories.value;
+    this.selectedPhases = this.reportingService.reportingPhases.value;
+    this.selectedRecruit = this.reportingService.reportingRecruit;
   }
 
 }

@@ -1,4 +1,4 @@
-<div *ngIf="rating.catID === category && rating.rating === 99 else lowRating">
+<div *ngIf="rating.catID === category && rating.rating === 99">
   <span class="fa fa-eye-slash fa-2" aria-hidden="true"></span>
 </div>
 <div #lowRating *ngIf="rating.catID === category && rating.catID !== 0 && rating.rating < 4">

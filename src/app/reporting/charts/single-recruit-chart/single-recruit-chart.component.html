@@ -1,10 +1,17 @@
 <div class="row mt-3">
-  <div class="col-12 border rounded border-secondary mx-4 mb-4 p-3 bg-light">
+  <div class="border rounded border-secondary mx-4 p-3 mb-4 bg-light">
     <p class="lead">Phase: <strong>{{phaseLabel}}</strong></p>  
-    <ngx-charts-bar-vertical-2d [view]="view" [scheme]="colorScheme" [results]="multi"  [animations]="animations"
+    <ngx-charts-bar-vertical-2d [view]="view" [scheme]="colorScheme" [results]="multi" [yScaleMax]="7"  [animations]="animations"
       [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [barPadding]="barPadding" [groupPadding]="groupPadding"
-      (select)="onSelect($event)">
+      (select)="onSelect($event.dorID)">
+
+      <ng-template #tooltipTemplate let-model="model">
+        <h6>{{model.name}}</h6>
+        <div class="text-left">FTO: {{model.fto}}</div>
+        <div class="text-left">Rating: {{model.value}}</div>
+        <div class="text-left" *ngIf="model.remedial > 0">Remedial: <span class="text-warning font-weight-bold">{{model.remedial}}</span></div>
+      </ng-template>
     </ngx-charts-bar-vertical-2d>
   </div>
 </div>

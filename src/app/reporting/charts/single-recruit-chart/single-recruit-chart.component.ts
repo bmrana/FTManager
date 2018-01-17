@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SortArrayPipe } from './../../../core/pipes/sort-array.pipe';
 import { BuildMultiPipe } from './../../../core/pipes/build-multi.pipe';
 import { Subscription } from 'rxjs/Subscription';
@@ -9,6 +10,7 @@ import { colorSets } from '@swimlane/ngx-charts/release/utils/color-sets';
 import { moment } from 'moment/src/moment';
 import { PrettyDatePipe } from '../../../core/pipes/pretty-date.pipe';
 import { DorService } from '../../../core/services/dor.service';
+import { DorFormDataService } from '../../../forms/dor/data/dor-form-data.service';
 
 @Component({
   selector: 'app-single-recruit-chart',
@@ -23,7 +25,7 @@ export class SingleRecruitChartComponent implements OnInit {
   ratings: any[] = [];
   subscription: Subscription;
   multi: any[] = [];
-  view: any[] = [1500, 400];
+  view: any[] = [1000, 400];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -49,7 +51,9 @@ export class SingleRecruitChartComponent implements OnInit {
     private multiPipe: BuildMultiPipe,
     private sortPipe: SortArrayPipe,
     private datePipe: PrettyDatePipe,
-    private dorService: DorService) {
+    private dorService: DorService,
+    private dorDataService: DorFormDataService,
+    private router: Router) {
 
     // const single = this.single;
     this.colorScheme = colorSets.find(s => s.name === 'vivid');
@@ -62,6 +66,8 @@ export class SingleRecruitChartComponent implements OnInit {
       break;
       case 10: this.phaseLabel = 'Traffic';
       break;
+      case 5: this.phaseLabel = 'Ghost';
+      break;
       default: this.phaseLabel = this.phase.toString();
     }
     
@@ -71,6 +77,7 @@ export class SingleRecruitChartComponent implements OnInit {
         this.selectedCategories.length = 0;
         this.selectedCategories.push(...v);
         this.filterCategories();
+        
       }
       );
 
@@ -110,7 +117,9 @@ export class SingleRecruitChartComponent implements OnInit {
           value: cleanValue(item.value),
           category: item.category,
           dorID: item.dorID,
-          phase: item.phase
+          phase: item.phase,
+          remedial: item.remedial,
+          fto: item.fto
         });
 
         return [...memo];
@@ -129,5 +138,8 @@ export class SingleRecruitChartComponent implements OnInit {
     this.multi = [...this.multi];
   }
 
-  
+  onSelect(dorID) {
+    this.dorDataService.getDorID = dorID;
+    this.router.navigate(['/dor/dor']);
+  }
 }

@@ -26,10 +26,11 @@ export class BuildMultiPipe implements PipeTransform {
             value: value.rating,
             category: value.catid,
             dorID: value.dorID,
-            phase: value.phase
+            phase: value.phase,
+            remedial: value.remedial,
+            fto: value.FTO
           }]
         };
-
         const i = multi.indexOf(multi.find(v => v.name === value.shiftDate));
         if (i === -1) {
           multi.push(item);
