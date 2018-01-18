@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { DORCategory } from './../../../core/data-models/dor-category.model';
 import { CannedComment } from './../data/CannedComment.model';
@@ -10,13 +11,14 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { DORRating } from './../../../core/data-models/dor-rating.model';
 import { UsersService } from './../../../core/services/users.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-dor-category-form',
   templateUrl: './dor-category-form.component.html',
   styleUrls: ['./dor-category-form.component.css']
 })
-export class DorCategoryFormComponent implements OnInit {
+export class DorCategoryFormComponent implements OnInit, OnDestroy {
   locked = false;
   title: string;
   description: string;
@@ -29,7 +31,7 @@ export class DorCategoryFormComponent implements OnInit {
   currentPage: number;
   commentGroupVisible = false;
   remedialVisible = false;
-  formSavedTrigger = new Subject<boolean>();
+  formSavedTrigger: Subscription;
 
   constructor(private lookups: DorService,
               private router: Router,
@@ -51,12 +53,17 @@ export class DorCategoryFormComponent implements OnInit {
       }
     );
 
-    this.dorDataService.saveTrigger
+    this.formSavedTrigger = this.dorDataService.saveTrigger
       .subscribe(
         (trigger) => {
           this.save();
         }
       );
+  }
+
+  ngOnDestroy() {
+    console.log('unsubscribe');
+    this.formSavedTrigger.unsubscribe();
   }
 
   onRatingSelected(value) {
