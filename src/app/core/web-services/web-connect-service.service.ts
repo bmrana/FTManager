@@ -1,3 +1,4 @@
+import { DailyJournal } from './../../forms/daily-journal/daily-journal.model';
 import { Subject } from 'rxjs/Subject';
 import { DashboardService } from './../services/dashboard.service';
 import { DashboardDOR } from './../data-models/dashboard-dor.model';
@@ -231,6 +232,15 @@ export class WebConnectServiceService {
           if (ratings.length > 0) {
             this.reportinService.setSingleUserRatings(ratings);
           }
+        }
+      );
+    }
+
+    updateRDJ(dailyJournal: DailyJournal) {
+      return this.http.post(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/updateRDJ', dailyJournal, {headers: this.headers})
+      .subscribe(
+        (result: number) => {
+          this.dorFormService.setRDJSaveStatus(result);
         }
       );
     }

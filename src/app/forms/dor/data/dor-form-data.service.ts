@@ -1,3 +1,4 @@
+import { DailyJournal } from './../../daily-journal/daily-journal.model';
 import { CannedComment } from './cannedComment.model';
 import { CategoryRating } from './categoryRating.model';
 import { UsersService } from './../../../core/services/users.service';
@@ -13,17 +14,24 @@ import { AppUser } from '../../../core/data-models/app-user.model';
 @Injectable()
 export class DorFormDataService {
   formData: FormData = new FormData();
+  dailyJournal: DailyJournal = new DailyJournal();
   formChanged = new BehaviorSubject<boolean>(false);
   currentDORNumber = new BehaviorSubject<number>(null);
   recruitName = new BehaviorSubject<string>(null);
   saveTrigger = new Subject<number>();
   getDorID: number;
   navIndicators = new BehaviorSubject<CategoryRating[]>(this.formData.dorRatings);
+  dailyJournalSaveStatus = new Subject<number>();
+  dailyJournalCloser = new Subject<boolean>();
 
   constructor(private users: UsersService) {}
 
   getDorData() {
     return this.formData;
+  }
+
+  getDailyJournal() {
+    return this.dailyJournal;
   }
 
   setDorData(formData) {
@@ -56,6 +64,10 @@ export class DorFormDataService {
     return this.formData.reviewed;
   }
 
+  setRDJSaveStatus(status: number) {
+    this.dailyJournalSaveStatus.next(status);
+  }
+
   setDorCategories(formData, catID) {
     const rating: CategoryRating = new CategoryRating(catID, formData.rating, formData.remedial, formData.otherComments);
     const ratingIndex = this.formData.dorRatings.indexOf(this.formData.dorRatings.find(r => r.catID === catID));
@@ -81,6 +93,7 @@ export class DorFormDataService {
 
   setDOR(dorData: any[]) {
     this.formData = new FormData();
+    this.dailyJournal = new DailyJournal();
 
     for (let row of dorData) {
       if (row.rowType === 'comment') {
@@ -115,9 +128,22 @@ export class DorFormDataService {
         this.recruitName.next(recruit.DisplayName);
         this.currentDORNumber.next(row.dor_number);
       }
+
+      if (row.rowType === 'drj') {
+        this.dailyJournal.id = row.rdj_id;
+        this.dailyJournal.applyKnowledge = row.rdj_applyKnowledge;
+        this.dailyJournal.areaProud = row.rdj_areaProud;
+        this.dailyJournal.improveMost = row.rdj_improveMost;
+        this.dailyJournal.leastSatisfied = row.rdj_leastSatisfied;
+        this.dailyJournal.questions = row.rdj_questions;
+        this.dailyJournal.singleMost = row.rdj_singleMost;
+        this.dailyJournal.modified = row.rdj_modified;
+      }
     }
     this.navIndicators.next(this.formData.dorRatings);
     sessionStorage.removeItem('ftm_formLoader');
+
+    console.log(this.dailyJournal);
   }
 
   updateDorNumber(dorNumber: number) {
@@ -128,6 +154,7 @@ export class DorFormDataService {
 
   resetFormData(): FormData {
     this.formData.clear();
+    if (this.dailyJournal) {this.dailyJournal = null; }
     this.currentDORNumber.next(null);
     this.recruitName.next('');
 

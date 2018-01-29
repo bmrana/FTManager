@@ -1,22 +1,28 @@
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { EmailService } from './../../../core/services/email.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { WebConnectServiceService } from '../../../core/web-services/web-connect-service.service';
 import { DorFormDataService } from '../data/dor-form-data.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { DailyJournal } from '../../daily-journal/daily-journal.model';
 
 @Component({
   selector: 'app-form-status',
   templateUrl: './form-status.component.html',
   styleUrls: ['./form-status.component.css']
 })
-export class FormStatusComponent implements OnInit {
+export class FormStatusComponent implements OnInit, OnDestroy {
+  @ViewChild('closeRDJ') closeRDJ: ElementRef;
+
   currentDorNumber: number;
+  dailyJournal: DailyJournal;
   dorNumberSubscription: Subscription;
   formChangedSubscription: Subscription;
   recruitNameChanged: Subscription;
   sendMailSubscription: Subscription;
+  rdjCloseSubscription: Subscription;
   formChanged = false;
   recruitName: string;
   saveStatus: string;
@@ -31,8 +37,19 @@ export class FormStatusComponent implements OnInit {
   constructor(private http: WebConnectServiceService, private dorData: DorFormDataService,
     private router: Router, private auth: AuthorizationService, private mail: EmailService) { }
 
+    ngOnDestroy() {
+      this.authSubscription.unsubscribe();
+      this.dorNumberSubscription.unsubscribe();
+      this.formChangedSubscription.unsubscribe();
+      this.recruitNameChanged.unsubscribe();
+      if (this.sendMailSubscription) {this.sendMailSubscription.unsubscribe(); }
+      this.rdjCloseSubscription.unsubscribe();
+    }
+
     ngOnInit() {
       this.locked = this.dorData.formData.finalized;
+      this.dailyJournal = this.dorData.dailyJournal;
+      console.log(this.dailyJournal.modified);
 
       this.dorNumberSubscription = this.dorData.currentDORNumber
         .subscribe(
@@ -43,7 +60,7 @@ export class FormStatusComponent implements OnInit {
             this.reviewed = this.dorData.formData.reviewed;
           }
         );
-      
+
         this.authSubscription = this.auth.authorization
         .subscribe(
           (authLevel) => {
@@ -65,6 +82,13 @@ export class FormStatusComponent implements OnInit {
             this.recruitName = name;
           }
         );
+
+        this.rdjCloseSubscription = this.dorData.dailyJournalCloser
+          .subscribe(
+            (c) => {
+              this.closeRDJ.nativeElement.click();
+            }
+          );
     }
 
     onSubmit() {

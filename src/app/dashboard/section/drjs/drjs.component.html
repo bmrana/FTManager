@@ -1,3 +1,36 @@
-<p>
-  drjs works!
-</p>
+<form (ngSubmit)="onSubmit(dailyJournalForm)" #dailyJournalForm="ngForm">
+  <div class="form-group">
+    <label for="singleMost" class="col-form-label">What was the single most important learning opportunity today?</label>
+    <textarea id="singleMost" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.singleMost" name="singleMost" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="applyKnowledge" class="col-form-label">How will I apply the knowledge I learned today both professionally and personally?</label>
+    <textarea id="applyKnowledge" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.applyKnowledge" name="applyKnowledge" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="areaProud" class="col-form-label">What area of my performance am I most proud of?</label>
+    <textarea id="areaProud" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.areaProud" name="areaProud" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="improveMost" class="col-form-label">After today's experiences, what do I need to improve on most?</label>
+    <textarea id="improveMost" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.improveMost" name="improveMost" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="leastSatisfied" class="col-form-label">What area of my performance was I least satisfied with and how do I plan to address it?</label>
+    <textarea id="leastSatisfied" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.leastSatisfied" name="leastSatisfied" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="questions" class="col-form-label">What questions do I have for my Training Officer?</label>
+    <textarea id="questions" rows="7" class="form-control"
+      [(ngModel)]="dailyJournal.questions" name="questions" [disabled]="!enabled" (ngModelChange)="onChanged()"></textarea>
+  </div>
+        <button *ngIf="enabled" class="btn btn-primary float-left" type="submit" [disabled]="formClean">Save Entry</button>
+        <button class="btn btn-secondary float-left ml-3" type="button" (click)="onClose()">Close</button>
+        <h4 class="float-left ml-3"><span *ngIf="formClean" class="badge badge-info">{{message}}</span></h4>
+        
+</form>
