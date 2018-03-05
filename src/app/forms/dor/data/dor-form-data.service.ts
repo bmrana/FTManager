@@ -143,7 +143,6 @@ export class DorFormDataService {
     this.navIndicators.next(this.formData.dorRatings);
     sessionStorage.removeItem('ftm_formLoader');
 
-    console.log(this.dailyJournal);
   }
 
   updateDorNumber(dorNumber: number) {

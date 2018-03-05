@@ -1,3 +1,5 @@
+import { OverviewService } from './../../recruit-overview/overview.service';
+import { OverviewDOR } from './../../recruit-overview/overviewDOR.model';
 import { DailyJournal } from './../../forms/daily-journal/daily-journal.model';
 import { Subject } from 'rxjs/Subject';
 import { DashboardService } from './../services/dashboard.service';
@@ -35,7 +37,7 @@ export class WebConnectServiceService {
   policeUsers: MicrosoftGraph.User[];
   token = new Subject<boolean>();
   accessToken: string;
-  returnURL = '/dashboard/dors';
+  returnURL = '/dashboard';
   formToLoad: FormLoader;
 
   constructor(
@@ -46,7 +48,8 @@ export class WebConnectServiceService {
     private error: ErrorComponent,
     private dorFormService: DorFormDataService,
     private dashboardService: DashboardService,
-    private reportinService: ReportingService) {}
+    private reportinService: ReportingService,
+    private overviewService: OverviewService) {}
 
     // fetchAllUsers() {
     //   return this.http.get<DomainUser[]>('http://localhost:62675/ADService.svc/getUsers')
@@ -98,7 +101,7 @@ export class WebConnectServiceService {
       var client = this.getClient();
       return Observable.fromPromise(
         client
-          .api("myorganization/users?$filter=startsWith(Department, 'Police')&$top=999")
+          .api(`myorganization/users?$filter=startsWith(Department, 'Police')&$top=999`)
           .get()
           .then (
             (res) => {
@@ -179,6 +182,16 @@ export class WebConnectServiceService {
         .map(
           (dors: DashboardDOR[]) => {
             this.dashboardService.setDashboardDORs(dors);
+            return dors;
+          }
+        );
+    }
+
+    getRecruitOverview() {
+      return this.http.get<OverviewDOR[]>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/getRecruitOverview')
+        .map(
+          (dors: OverviewDOR[]) => {
+            this.overviewService.setOverviewDORS(dors);
             return dors;
           }
         );

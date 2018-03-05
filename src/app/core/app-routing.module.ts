@@ -25,6 +25,8 @@ import { SystemSettingsComponent } from '../administration/System-settings/syste
 import { LoginComponent } from '../home/login/login.component';
 import { AuthGuardDORService } from './guards/auth-guard-dor.service';
 import { SingleRecruitChartComponent } from '../reporting/charts/single-recruit-chart/single-recruit-chart.component';
+import { OverviewResolverService } from '../recruit-overview/overview-resolver.service';
+import { RecruitOverviewContainerComponent } from '../recruit-overview/recruit-overview-container/recruit-overview-container.component';
 // import { SectionComponent } from '../dashboard/section/section.component';
 
 const appRoutes: Routes = [
@@ -32,13 +34,17 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'Error', component: ErrorComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], resolve: {
-    dashboardDORS: DashboardDORResolver
-    }, children: [
-      // { path: '', redirectTo: 'dors', pathMatch: 'full'},
-      // { path: 'dors', component: SectionComponent },
-      { path: ':section', component: SectionComponent }
-    ]
+  // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], resolve: {
+  //   dashboardDORS: DashboardDORResolver
+  //   }, children: [
+  //     // { path: '', redirectTo: 'dors', pathMatch: 'full'},
+  //     // { path: 'dors', component: SectionComponent },
+  //     { path: ':section', component: SectionComponent }
+  //   ]
+  // },
+  { path: 'dashboard', component: RecruitOverviewContainerComponent, canActivate: [AuthGuardService], resolve: {
+    overviewDORS: OverviewResolverService
+    }
   },
   { path: 'dor', component: DorComponent, canActivate: [AuthGuardService], children: [
     { path: '', redirectTo: '/dor/0', pathMatch: 'full'},

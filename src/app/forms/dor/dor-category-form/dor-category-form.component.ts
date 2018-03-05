@@ -62,7 +62,6 @@ export class DorCategoryFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('unsubscribe');
     this.formSavedTrigger.unsubscribe();
   }
 

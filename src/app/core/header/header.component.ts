@@ -84,7 +84,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onNavBrandClick() {
-    this.router.navigate(['/dashboard/dors']);
+    // this.router.navigate(['/dashboard/dors']);
+    this.router.navigate(['/dashboard']);
   }
   
   onFakeNav() {

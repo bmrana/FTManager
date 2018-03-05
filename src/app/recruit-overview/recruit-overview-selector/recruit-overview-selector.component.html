@@ -1,0 +1,4 @@
+<select id="userSelector" class="form-control form-control-lg" (change)="onPersonSelected($event.target.value)">
+  <option value="" selected disabled hidden>Select a Recruit</option>
+  <option *ngFor="let user of appUsers | sortArray : 'DisplayName' | userListFilter : 3 : 'RoleID'; let i = index" [value]=user.EmployeeID>{{user.LastName}}, {{user.FirstName}}</option>
+</select>

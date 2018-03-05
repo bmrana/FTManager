@@ -1,3 +1,5 @@
+import { SortArrayPipe } from './core/pipes/sort-array.pipe';
+import { ApplicationPipesModule } from './core/pipes/application-pipes.module';
 import { AuthGuardDORService } from './core/guards/auth-guard-dor.service';
 import { GetDocResolverService } from './core/resolvers/get-doc-resolver.service';
 import { CryptoService } from './core/services/crypto.service';
@@ -25,7 +27,6 @@ import { UserStartComponent } from './administration/user-admin/user-start/user-
 import { HomeComponent } from './home/home.component';
 import { UserListItemComponent } from './administration/user-admin/user-list/user-list-item/user-list-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserListFilterPipe } from './core/pipes/user-list-filter.pipe';
 import { ErrorComponent } from './home/error/error.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashHeaderComponent } from './dashboard/dash-header/dash-header.component';
@@ -48,7 +49,6 @@ import { SectionComponent } from './dashboard/section/section.component';
 import { EoprsComponent } from './dashboard/section/eoprs/eoprs.component';
 import { DrjsComponent } from './dashboard/section/drjs/drjs.component';
 import { AuthService } from './core/services/auth.service';
-import { DerpPipe } from './core/pipes/derp.pipe';
 import { ZoneComponent } from './home/zone/zone.component';
 import { SystemSettingsComponent } from './administration/System-settings/system-settings/system-settings.component';
 import { DorNavIndicatorComponent } from './forms/dor/dor-nav/dor-nav-item/dor-nav-indicator/dor-nav-indicator.component';
@@ -56,11 +56,10 @@ import { LoginComponent } from './home/login/login.component';
 import { SingleRecruitChartComponent } from './reporting/charts/single-recruit-chart/single-recruit-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportingService } from './reporting/reporting.service';
-import { BuildMultiPipe } from './core/pipes/build-multi.pipe';
-import { SortArrayPipe } from './core/pipes/sort-array.pipe';
-import { PrettyDatePipe } from './core/pipes/pretty-date.pipe';
 import { SelectorComponent } from './reporting/selector/selector.component';
 import { ContainerComponent } from './reporting/container/container.component';
+import { RecruitOverviewContainerComponent } from './recruit-overview/recruit-overview-container/recruit-overview-container.component';
+import { RecruitOverviewModule } from './recruit-overview/recruit-overview.module';
 
 @NgModule({
   declarations: [
@@ -73,7 +72,6 @@ import { ContainerComponent } from './reporting/container/container.component';
     UserStartComponent,
     HomeComponent,
     UserListItemComponent,
-    UserListFilterPipe,
     ErrorComponent,
     DashboardComponent,
     DashHeaderComponent,
@@ -92,17 +90,14 @@ import { ContainerComponent } from './reporting/container/container.component';
     SectionComponent,
     EoprsComponent,
     DrjsComponent,
-    DerpPipe,
     ZoneComponent,
     SystemSettingsComponent,
     DorNavIndicatorComponent,
     LoginComponent,
     SingleRecruitChartComponent,
-    BuildMultiPipe,
-    SortArrayPipe,
-    PrettyDatePipe,
     SelectorComponent,
     ContainerComponent,
+    RecruitOverviewContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,7 +106,9 @@ import { ContainerComponent } from './reporting/container/container.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    RecruitOverviewModule,
+    ApplicationPipesModule
   ],
   providers: [ WebConnectServiceService,
               UsersService,
@@ -121,7 +118,6 @@ import { ContainerComponent } from './reporting/container/container.component';
               AuthorizationService,
               DeleteUserResolverService,
               DorCategoryFormComponent,
-              PrettyDatePipe,
               DashboardService,
               DashboardDORResolver,
               DorResolverService,
@@ -132,7 +128,6 @@ import { ContainerComponent } from './reporting/container/container.component';
               AuthGuardDORService,
               ErrorComponent,
               CryptoService,
-              BuildMultiPipe,
               GetDocResolverService,
               ReportingService,
               SortArrayPipe

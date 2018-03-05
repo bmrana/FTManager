@@ -62,7 +62,6 @@ export class DrjsComponent implements OnInit, OnDestroy {
     dj.singleMost = value.singleMost;
     dj.modified = new Date();
 
-    console.log(dj);
 
     this.http.updateRDJ(dj);
   }
