@@ -20,7 +20,7 @@ import { DorFormDataService } from '../../../forms/dor/data/dor-form-data.servic
 
 export class SingleRecruitChartComponent implements OnInit {
   @Input() phase: number;
-  
+
   phaseLabel = '';
   ratings: any[] = [];
   subscription: Subscription;
@@ -70,14 +70,14 @@ export class SingleRecruitChartComponent implements OnInit {
       break;
       default: this.phaseLabel = this.phase.toString();
     }
-    
+
     this.selectedCategorySubscription = this.reportingService.reportingCategories
       .subscribe(
       (v) => {
         this.selectedCategories.length = 0;
         this.selectedCategories.push(...v);
         this.filterCategories();
-        
+
       }
       );
 
@@ -95,7 +95,7 @@ export class SingleRecruitChartComponent implements OnInit {
       if (value === 99) {
         return 0;
       } else if (value === 0) {
-        return -5;
+        return -1;
       } else { return value; }
     }
 
@@ -108,7 +108,7 @@ export class SingleRecruitChartComponent implements OnInit {
     }
 
     this.multi = this.multiPipe.transform(this.ratings, this.phase);
-    
+
     this.multi = this.multi.map(group => {
       group.name = this.datePipe.transform(group.name);
       group.series = group.series.reduce(function (memo, item) {
