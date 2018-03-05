@@ -67,7 +67,7 @@ export class WebConnectServiceService {
     }
 
     getClient(): MicrosoftGraphClient.Client {
-      var client = MicrosoftGraphClient.Client.init(
+      const client = MicrosoftGraphClient.Client.init(
         {
           authProvider: (done) => {
             done(null, this.getAccessToken());
@@ -76,10 +76,9 @@ export class WebConnectServiceService {
       );
       return client;
     }
-  
-    getMe(): Observable<MicrosoftGraph.User>
-    {
-      var client = this.getClient();
+
+    getMe(): Observable<MicrosoftGraph.User> {
+      const client = this.getClient();
       return Observable.fromPromise(client
         .api('me')
         .select('displayName, mail, userPrincipalName, id')
@@ -92,13 +91,12 @@ export class WebConnectServiceService {
         )
       );
     }
-  
-    getPoliceUsers(): Observable<MicrosoftGraph.User[]>
-    {
-      var client = this.getClient();
+
+    getPoliceUsers(): Observable<MicrosoftGraph.User[]> {
+      const client = this.getClient();
       return Observable.fromPromise(
         client
-          .api("myorganization/users?$filter=startsWith(Department, 'Police')&$top=999")
+          .api(`myorganization/users?$filter=startsWith(Department, 'Police')&$top=999`)
           .get()
           .then (
             (res) => {
@@ -117,7 +115,7 @@ export class WebConnectServiceService {
           this.users.setAppUsers(appUsers);
         }
       );
-      
+
       this.http.get<any>(this.serviceURL + 'FieldTraining/DOR/lookupService.svc/fetchLookupValues')
       .subscribe(
         (lookupValues: any[]) => {

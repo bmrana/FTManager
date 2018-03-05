@@ -47,7 +47,7 @@ export class AuthService {
 
   logout() {
     hello('msft').logout().then(
-      () => window.location.href ='/',
+      () => window.location.href = '/',
       e => console.error(e.error.message)
     );
   }
