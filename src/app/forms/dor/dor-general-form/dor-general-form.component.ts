@@ -20,6 +20,7 @@ export class DorGeneralFormComponent implements OnInit {
   dorNumberSubscription: Subscription;
   currentDorNumber: number;
   locked = false;
+  formSavedTrigger: Subscription;
 
   phases: any[] = [{name: 'Phase 2', value: '2'},
                   {name: 'Phase 3', value: '3'},
@@ -45,6 +46,13 @@ export class DorGeneralFormComponent implements OnInit {
         return 0;
       }
     });
+
+    this.formSavedTrigger = this.dorDataService.saveTrigger
+      .subscribe(
+        (trigger) => {
+          this.save();
+        }
+      );
 
     this.dorNumberSubscription = this.dorDataService.currentDORNumber
     .subscribe(

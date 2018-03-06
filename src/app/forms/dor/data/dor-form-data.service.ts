@@ -164,9 +164,7 @@ export class DorFormDataService {
       this.formData.dorRatings.push(catRating);
   }
   this.navIndicators.next(this.formData.dorRatings);
-  
+
     return this.formData;
   }
-
-  
 }

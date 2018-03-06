@@ -49,7 +49,6 @@ export class FormStatusComponent implements OnInit, OnDestroy {
     ngOnInit() {
       this.locked = this.dorData.formData.finalized;
       this.dailyJournal = this.dorData.dailyJournal;
-      console.log(this.dailyJournal.modified);
 
       this.dorNumberSubscription = this.dorData.currentDORNumber
         .subscribe(
